@@ -1,0 +1,126 @@
+[
+  {
+    "certificateNumber": "CERT-001",
+    "insType": "Temperatura",
+    "brand": "ThermoCo",
+    "model": "TH-1000",
+    "nameIdentify": "ThermoCalibrator",
+    "description": "Calibration certificate for laboratory thermometer",
+    "issueDate": "2023-12-01",
+    "unit": "°C",
+    "measurements": [
+      {
+        "certId": "CERT-001",
+        "reference": 100.0,
+        "instrumentReading": 100.2,
+        "correction": -0.2,
+        "uncertainty": 0.1,
+        "ambientTemp": 22.5
+      },
+      {
+        "certId": "CERT-001",
+        "reference": 50.0,
+        "instrumentReading": 49.8,
+        "correction": 0.2,
+        "uncertainty": 0.15,
+        "ambientTemp": 22.4
+      },
+      {
+        "certId": "CERT-001",
+        "reference": 0.0,
+        "instrumentReading": 0.1,
+        "correction": -0.1,
+        "uncertainty": 0.05,
+        "ambientTemp": 22.6
+      }
+    ]
+  },
+  {
+    "certificateNumber": "CERT-002",
+    "insType": "Temperatura",
+    "brand": "TempMaster",
+    "model": "TMP-200",
+    "nameIdentify": "BackupThermo",
+    "description": "Secondary thermometer calibration",
+    "issueDate": "2024-01-15",
+    "unit": "°C",
+    "measurements": [
+      {
+        "certId": "CERT-002",
+        "reference": 80.0,
+        "instrumentReading": 80.1,
+        "correction": -0.1,
+        "uncertainty": 0.12,
+        "ambientTemp": 21.8
+      },
+      {
+        "certId": "CERT-002",
+        "reference": 40.0,
+        "instrumentReading": 39.9,
+        "correction": 0.1,
+        "uncertainty": 0.1,
+        "ambientTemp": 21.9
+      },
+      {
+        "certId": "CERT-002",
+        "reference": 20.0,
+        "instrumentReading": 19.8,
+        "correction": 0.2,
+        "uncertainty": 0.13,
+        "ambientTemp": 22.0
+      }
+    ]
+  },
+  {
+    "certificateNumber": "CERT-003",
+    "insType": "Presion",
+    "brand": "PressureMax",
+    "model": "PMX-500",
+    "nameIdentify": "MainPressureGauge",
+    "description": "Pressure calibration certificate",
+    "issueDate": "2024-03-20",
+    "unit": "bar",
+    "measurements": [
+      {
+        "certId": "CERT-003",
+        "reference": 0.0,
+        "instrumentReading": 0.1,
+        "correction": -0.1,
+        "uncertainty": 0.05,
+        "ambientTemp": 23.1
+      },
+      {
+        "certId": "CERT-003",
+        "reference": 37.5,
+        "instrumentReading": 37.4,
+        "correction": 0.1,
+        "uncertainty": 0.08,
+        "ambientTemp": 23.3
+      },
+      {
+        "certId": "CERT-003",
+        "reference": 75.0,
+        "instrumentReading": 74.8,
+        "correction": 0.2,
+        "uncertainty": 0.1,
+        "ambientTemp": 23.0
+      },
+      {
+        "certId": "CERT-003",
+        "reference": 112.5,
+        "instrumentReading": 112.6,
+        "correction": -0.1,
+        "uncertainty": 0.12,
+        "ambientTemp": 23.2
+      },
+      {
+        "certId": "CERT-003",
+        "reference": 150.0,
+        "instrumentReading": 150.1,
+        "correction": -0.1,
+        "uncertainty": 0.15,
+        "ambientTemp": 23.4
+      }
+    ]
+  }
+]
