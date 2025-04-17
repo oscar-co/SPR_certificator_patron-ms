@@ -8,8 +8,7 @@ public class Change {
     private Double inputValue;
     private Double outputValue;
 
-    // // Default constructor
-    // public Change() {}
+    
 
     // // All-args constructor
     // public Change(String magnitud, String inputUnit, String outputUnit, Double inputValue, Double outputValue) {
@@ -18,6 +17,10 @@ public class Change {
     //     this.inputValue = inputValue;
     //     this.outputValue = outputValue;
     // }
+
+    // // Default constructor
+    public Change() {}
+
 
     public Change(String inputUnit, Double inputValue) {
         this.inputUnit = inputUnit;

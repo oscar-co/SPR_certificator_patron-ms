@@ -7,17 +7,20 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-
-
 public interface CertificateRepository extends JpaRepository<Certificate, Long> {
 
 
-    @Query("""
-        SELECT c FROM Certificate c
-        JOIN c.measurements m
-        WHERE c.insType = :magnitud
-        AND m.instrumentReading > :valorEntrada
-    """)
+    @Query(value = """
+        SELECT DISTINCT c.* FROM certificate c
+        JOIN measurement m ON c.id = m.certificate_id
+        WHERE c.ins_type = :magnitud
+        AND :valorEntrada BETWEEN (
+            SELECT MIN(m2.reference) FROM measurement m2 WHERE m2.certificate_id = c.id
+        ) AND (
+            SELECT MAX(m2.reference) FROM measurement m2 WHERE m2.certificate_id = c.id
+        )
+        """
+        , nativeQuery = true)
 
     List<Certificate> findMatchingCertificates(
         @Param("magnitud") String magnitud,
