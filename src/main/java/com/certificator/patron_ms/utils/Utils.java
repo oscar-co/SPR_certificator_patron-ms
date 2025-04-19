@@ -1,12 +1,10 @@
 package com.certificator.patron_ms.utils;
 
-
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Utils {
-
 
     public static String readJsonFromFile(String relativePath) throws Exception {
         ClassLoader classLoader = Utils.class.getClassLoader();
@@ -22,5 +20,4 @@ public class Utils {
         if (input == null || input.isEmpty()) return input;
         return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
-
 }

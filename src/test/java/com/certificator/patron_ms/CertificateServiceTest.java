@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,10 +27,10 @@ class CertificateServiceTest {
     @InjectMocks
     private CertificateService certificateService;
 
-    @BeforeEach
-    void setUp() {
+    // @BeforeEach
+    // void setUp() {
 
-    }
+    // }
 
 
     @Test
@@ -39,6 +38,7 @@ class CertificateServiceTest {
         // Datos de prueba
         Certificate certificate = new Certificate();
         certificate.setCertificateNumber("CERT-001");
+        certificate.setNameIdentify("PTN-001");
         
         when(certificateRepository.save(certificate)).thenReturn(certificate);
         Certificate result = certificateService.createNewPtn(certificate);

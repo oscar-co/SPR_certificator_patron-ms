@@ -1,5 +1,7 @@
 package com.certificator.patron_ms.Service;
 
+import java.io.IOException;
+
 import com.certificator.patron_ms.Model.Certificate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,7 +38,7 @@ public class DataInitializer implements CommandLineRunner {
             }
 
             System.out.println("Certificates loaded successfully on startup.");
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Error loading certificate data: " + e.getMessage());
         }
     }
