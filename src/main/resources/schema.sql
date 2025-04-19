@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS conversion_factor (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    u_entrada VARCHAR(50) NOT NULL,
+    u_salida VARCHAR(50) NOT NULL,
+    factor DOUBLE NOT NULL
+);

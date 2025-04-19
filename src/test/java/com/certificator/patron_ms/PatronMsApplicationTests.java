@@ -16,7 +16,7 @@ import com.certificator.patron_ms.Model.Certificate;
 import static com.certificator.patron_ms.utils.TestUtils.readJsonFromFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@SpringBootTest
+@SpringBootTest(classes = PatronMsApplication.class)
 @AutoConfigureMockMvc
 public class PatronMsApplicationTests {
 

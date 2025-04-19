@@ -1,7 +1,6 @@
 package com.certificator.patron_ms.Controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
 import com.certificator.patron_ms.Model.Certificate;
 import com.certificator.patron_ms.Model.Change;
 import com.certificator.patron_ms.Service.CertificateService;
@@ -24,10 +24,9 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
-    // @Autowired
-    // private ChangeService changeService;
+    @Autowired
+    private ChangeService changeService;
 
-    
     @PostMapping
     public ResponseEntity<Certificate> createPtn(@RequestBody Certificate certificate){
         Certificate cert = certificateService.createNewPtn(certificate);
@@ -47,8 +46,12 @@ public class CertificateController {
     @PostMapping("/patrones-disponibles")
     public ResponseEntity<List<Certificate>> getPatronAvailable(@RequestBody Change change){
 
-        System.out.println(change);
-        return ResponseEntity.ok(certificateService.getPatronesByMeasure(change));
-        
+        return ResponseEntity.ok(changeService.getPatronesByMeasure(change));
+    }
+
+    @PostMapping("/incertidumbre-patron")
+    public ResponseEntity<Double> getUncertaintyByPtn(@RequestBody UncertaintyByPtnDTO request){
+
+        return ResponseEntity.ok(changeService.getUncertaintyByPtnS(request));
     }
 }

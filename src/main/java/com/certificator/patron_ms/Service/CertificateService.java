@@ -2,21 +2,18 @@ package com.certificator.patron_ms.Service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Model.Change;
 import com.certificator.patron_ms.Repository.CertificateRepository;
-import com.certificator.patron_ms.utils.Utils;
 
 @Service
 public class CertificateService {
 
     
-    @Autowired 
+    //@Autowired 
     CertificateRepository certificateRepository;
     
     public CertificateService(CertificateRepository certificateRepository) {
@@ -24,7 +21,14 @@ public class CertificateService {
     }
 
     public Certificate createNewPtn(Certificate certificate) {
-        return certificateRepository.save(certificate);
+        if (certificate == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate cannot be null");
+        }
+        try {
+            return certificateRepository.save(certificate);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error saving certificate: " + e.getMessage(), e);
+        }
     }
 
     public Certificate getPtnById(Long id){
@@ -34,14 +38,5 @@ public class CertificateService {
 
     public List<Certificate> getAllCertificates(){
         return certificateRepository.findAll();
-    }
-
-    public List<Certificate> getPatronesByMeasure(Change request) {
-
-        if (request.getInputValue() == null || request.getMagnitud() == null) {
-            throw new IllegalArgumentException("Faltan datos obligatorios en el cuerpo del JSON.");
-        }
-        String magnitudFormatted = Utils.capitalize(request.getMagnitud().toLowerCase());
-        return certificateRepository.findMatchingCertificates( magnitudFormatted, request.getInputValue() );
     }
 }

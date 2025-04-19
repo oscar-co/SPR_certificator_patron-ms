@@ -1,24 +1,22 @@
 package com.certificator.patron_ms;
 
-import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Model.Change;
-import com.certificator.patron_ms.Repository.CertificateRepository;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.extension.ExtendWith;
-import static org.mockito.Mockito.*;
-import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.certificator.patron_ms.Model.Certificate;
+import com.certificator.patron_ms.Repository.CertificateRepository;
 import com.certificator.patron_ms.Service.CertificateService;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,43 +33,31 @@ class CertificateServiceTest {
 
     }
 
+
     @Test
-    void testGetPatronesByMeasure_returnsMatchingCertificates() {
-        // Arrange
-        Change request = new Change();
-        request.setMagnitud("temperatura");
-        request.setInputValue(50.0);
+    void testCreateNewPtn_Success() {
+        // Datos de prueba
+        Certificate certificate = new Certificate();
+        certificate.setCertificateNumber("CERT-001");
+        
+        when(certificateRepository.save(certificate)).thenReturn(certificate);
+        Certificate result = certificateService.createNewPtn(certificate);
 
-        Certificate dummyCert = new Certificate();
-        dummyCert.setCertificateNumber("CERT-001");
-
-        List<Certificate> expected = List.of(dummyCert);
-
-        when(certificateRepository.findMatchingCertificates("Temperatura", 50.0)).thenReturn(expected);
-
-        // Act
-        List<Certificate> result = certificateService.getPatronesByMeasure(request);
-
-        // Assert
-        assertEquals(1, result.size());
-        assertEquals("CERT-001", result.get(0).getCertificateNumber());
-        verify(certificateRepository, times(1)).findMatchingCertificates("Temperatura", 50.0);
+        assertNotNull(result);
+        assertEquals(certificate, result);
+        
+        // Verificamos que el repositorio fue llamado correctamente
+        verify(certificateRepository).save(certificate);
     }
 
+
     @Test
-    void testGetPatronesByMeasure_whenNoResults_returnsEmptyList() {
-        // Arrange
-        Change request = new Change();
-        request.setMagnitud("presión");
-        request.setInputValue(101.0);
+    void testPostNewPatron_NullCertificate_ThrowsBadRequestException() {
+        ResponseStatusException thrown = assertThrows(ResponseStatusException.class, () -> {
+            certificateService.createNewPtn(null);
+        });
 
-        when(certificateRepository.findMatchingCertificates("Presión", 101.0)).thenReturn(Collections.emptyList());
-
-        // Act
-        List<Certificate> result = certificateService.getPatronesByMeasure(request);
-
-        // Assert
-        assertEquals(0, result.size());
-        verify(certificateRepository, times(1)).findMatchingCertificates("Presión", 101.0);
+        assertEquals(HttpStatus.BAD_REQUEST, thrown.getStatusCode());
+        assertTrue(thrown.getReason().contains("Certificate cannot be null"));
     }
 }

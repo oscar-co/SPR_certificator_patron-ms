@@ -1,11 +1,14 @@
 package com.certificator.patron_ms.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.certificator.patron_ms.Model.Certificate;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CertificateRepository extends JpaRepository<Certificate, Long> {
 
@@ -25,6 +28,27 @@ public interface CertificateRepository extends JpaRepository<Certificate, Long> 
     List<Certificate> findMatchingCertificates(
         @Param("magnitud") String magnitud,
         @Param("valorEntrada") double valorEntrada
+    );
+
+
+
+    @Query("SELECT c.insType FROM Certificate c WHERE c.nameIdentify = :nameIdentify")
+    String findMagnitudByNameIdentify(@Param("nameIdentify") String nameIdentify);
+
+
+
+    @Query(value = """
+        SELECT m.uncertainty
+        FROM measurement m
+        JOIN certificate c ON m.cert_id = c.certificate_number
+        WHERE c.name_identify = :nameIdentify
+        AND m.reference > :refValue
+        ORDER BY m.reference ASC
+        LIMIT 1
+        """, nativeQuery = true)
+    Optional<Double> findUncertaintyAboveReferenceByNameIdentify(
+        @Param("nameIdentify") String nameIdentify,
+        @Param("refValue") double refValue
     );
 
 }

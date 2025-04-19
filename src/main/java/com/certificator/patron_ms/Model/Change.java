@@ -8,16 +8,6 @@ public class Change {
     private Double inputValue;
     private Double outputValue;
 
-    
-
-    // // All-args constructor
-    // public Change(String magnitud, String inputUnit, String outputUnit, Double inputValue, Double outputValue) {
-    //     this.inputUnit = inputUnit;
-    //     this.outputUnit = outputUnit;
-    //     this.inputValue = inputValue;
-    //     this.outputValue = outputValue;
-    // }
-
     // // Default constructor
     public Change() {}
 

@@ -1,0 +1,39 @@
+
+    {
+      "certificateNumber": "CERT-001",
+      "insType": "Temperatura",
+      "brand": "ThermoCo",
+      "model": "TH-1000",
+      "nameIdentify": "PTN-001",
+      "description": "Calibration certificate for laboratory thermometer",
+      "issueDate": "2023-12-01",
+      "unit": "°C",
+      "measurements": [
+        {
+          "certId": "CERT-001",
+          "reference": 100.0,
+          "instrumentReading": 100.2,
+          "correction": -0.2,
+          "uncertainty": 0.1,
+          "ambientTemp": 22.5
+        },
+        {
+          "certId": "CERT-001",
+          "reference": 50.0,
+          "instrumentReading": 49.8,
+          "correction": 0.2,
+          "uncertainty": 0.15,
+          "ambientTemp": 22.4
+        },
+        {
+          "certId": "CERT-001",
+          "reference": 0.0,
+          "instrumentReading": 0.1,
+          "correction": -0.1,
+          "uncertainty": 0.05,
+          "ambientTemp": 22.6
+        }
+      ]
+    }
+  
+  
