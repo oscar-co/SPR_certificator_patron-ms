@@ -3,12 +3,16 @@ package com.certificator.patron_ms.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
@@ -53,5 +57,17 @@ public class CertificateController {
     public ResponseEntity<Double> getUncertaintyByPtn(@RequestBody UncertaintyByPtnDTO request){
 
         return ResponseEntity.ok(changeService.getUncertaintyByPtnS(request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCertificate(@PathVariable Long id) {
+        certificateService.deleteCertificate(id);
+        return ResponseEntity.ok("Certificado eliminado correctamente");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Certificate> updateCertificate(@PathVariable Long id, @RequestBody Certificate certificate){
+
+        return ResponseEntity.ok(certificateService.updateCertificateById(id, certificate));
     }
 }
