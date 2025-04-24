@@ -9,6 +9,7 @@ public class TestUtils {
 
 
     public static String readJsonFromFile(String relativePath) throws Exception {
+        
         ClassLoader classLoader = TestUtils.class.getClassLoader();
         URL resource = classLoader.getResource(relativePath);
 

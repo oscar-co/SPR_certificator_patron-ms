@@ -1,4 +1,4 @@
-package com.certificator.patron_ms;
+package com.certificator.patron_ms.CertificateTests;
 
 import java.util.Optional;
 

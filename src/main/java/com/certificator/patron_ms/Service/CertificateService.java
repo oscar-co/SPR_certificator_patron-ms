@@ -53,7 +53,7 @@ public class CertificateService {
     }
 
 
-    public void deleteCertificate(Long id) {
+    public boolean deleteCertificate(Long id) {
 
         if (id == null) {
             logger.warn("El ID proporcionado es null");
@@ -68,6 +68,7 @@ public class CertificateService {
         try {
             certificateRepository.deleteById(id);
             logger.info("Certificado eliminado correctamente con id: {}", id);
+            return true;
         } catch (Exception e) {
             logger.error("Error al eliminar certificado con id: {}", id, e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error deleting certificate with id: " + id, e);

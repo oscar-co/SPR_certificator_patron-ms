@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 public class Utils {
 
     public static String readJsonFromFile(String relativePath) throws Exception {
+        
         ClassLoader classLoader = Utils.class.getClassLoader();
         URL resource = classLoader.getResource(relativePath);
 

@@ -38,6 +38,9 @@ public class ChangeService {
     public Double getUncertaintyByPtnS(UncertaintyByPtnDTO request){
 
         String magnitud = certificateRepository.findMagnitudByNameIdentify(request.getNameIdentify());
+        if (magnitud == null) {
+            throw new IllegalArgumentException("No se encontró magnitud para el identificador: " + request.getNameIdentify());
+        }
         String unit = request.getInputUnit();
         Double value = request.getInputValue();
 

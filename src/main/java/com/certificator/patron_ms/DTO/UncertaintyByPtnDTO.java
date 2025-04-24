@@ -12,27 +12,15 @@ public class UncertaintyByPtnDTO {
         this.nameIdentify = nameIdentify;
     }
 
-    public String getInputUnit() {
-        return inputUnit;
+    public UncertaintyByPtnDTO() {
     }
 
-    public void setInputUnit(String inputUnit) {
-        this.inputUnit = inputUnit;
-    }
+    public String getInputUnit() { return inputUnit; }
+    public void setInputUnit(String inputUnit) { this.inputUnit = inputUnit; }
 
-    public String getNameIdentify() {
-        return nameIdentify;
-    }
+    public String getNameIdentify() { return nameIdentify; }
+    public void setNameIdentify(String nameIdentify) { this.nameIdentify = nameIdentify; }
 
-    public void setNameIdentify(String nameIdentify) {
-        this.nameIdentify = nameIdentify;
-    }
-
-    public Double getInputValue() {
-        return inputValue;
-    }
-
-    public void setInputValue(Double inputValue) {
-        this.inputValue = inputValue;
-    }
+    public Double getInputValue() { return inputValue; }
+    public void setInputValue(Double inputValue) { this.inputValue = inputValue; }
 }
