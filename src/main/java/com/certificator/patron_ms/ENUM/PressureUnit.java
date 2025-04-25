@@ -1,7 +1,7 @@
 package com.certificator.patron_ms.ENUM;
 
 public enum PressureUnit {
-    BAR, PA, PSI;
+    BAR, PA, PSI, MBAR;
 
     public static boolean isValid(String unit) {
         for (PressureUnit u : values()) {

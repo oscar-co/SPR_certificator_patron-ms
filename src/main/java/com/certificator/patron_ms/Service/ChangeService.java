@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
+import com.certificator.patron_ms.Exception.CertificateNotFoundException;
 import com.certificator.patron_ms.Model.Certificate;
 import com.certificator.patron_ms.Model.Change;
 import com.certificator.patron_ms.Model.ConversionResult;
@@ -25,27 +26,20 @@ public class ChangeService {
 
     public List<Certificate> getPatronesByMeasure(Change request) {
 
-        Double inputValue = request.getInputValue();
-
-        if (inputValue == null || request.getMagnitud() == null || request.getInputUnit() == null) {
-            throw new IllegalArgumentException("Faltan datos obligatorios en el cuerpo del JSON.");
-        }
         var magnitudFormatted = Utils.capitalize(request.getMagnitud().toLowerCase());
-        inputValue = UnitConversionService.calculoTemperatura(request.getInputUnit(), inputValue);
-        return certificateRepository.findMatchingCertificates( magnitudFormatted, inputValue );
+        ConversionResult inputValue = unitConversionService.convertToReferenceUnit(magnitudFormatted,request.getInputUnit(), request.getInputValue());
+        return certificateRepository.findMatchingCertificates( magnitudFormatted, inputValue.getConvertedValue() );
     }
 
     public Double getUncertaintyByPtnS(UncertaintyByPtnDTO request){
 
         String magnitud = certificateRepository.findMagnitudByNameIdentify(request.getNameIdentify());
         if (magnitud == null) {
-            throw new IllegalArgumentException("No se encontró magnitud para el identificador: " + request.getNameIdentify());
+            throw new CertificateNotFoundException("No se encontró magnitud para el identificador: " + request.getNameIdentify());
         }
-        String unit = request.getInputUnit();
-        Double value = request.getInputValue();
-
-        ConversionResult conversionResult = unitConversionService.convertToReferenceUnit(magnitud, unit, value);
-        Optional<Double> uncertainty = certificateRepository.findUncertaintyAboveReferenceByNameIdentify(request.getNameIdentify(), conversionResult.getConvertedValue());
+        ConversionResult conversionResult = unitConversionService.convertToReferenceUnit(magnitud, request.getInputUnit(), request.getInputValue());
+        Optional<Double> uncertainty = certificateRepository.findUncertaintyAboveReferenceByNameIdentify(
+            request.getNameIdentify(), conversionResult.getConvertedValue());        
         return uncertainty.orElse(null);
     }
 }

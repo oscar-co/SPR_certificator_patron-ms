@@ -1,9 +1,17 @@
 package com.certificator.patron_ms.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class UncertaintyByPtnDTO {
 
+    @NotBlank(message = "El identificador del patrón es obligatorio")
     private String nameIdentify;
+
+    @NotBlank(message = "La unidad de entrada es obligatoria")
     private String inputUnit;
+
+    @NotNull(message = "El valor de entrada es obligatorio")
     private Double inputValue;
 
     public UncertaintyByPtnDTO(String inputUnit, Double inputValue, String nameIdentify) {

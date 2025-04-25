@@ -15,6 +15,8 @@ import com.certificator.patron_ms.Model.Certificate;
 import com.certificator.patron_ms.Model.Change;
 import com.certificator.patron_ms.Service.ChangeService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/patrones")
@@ -25,24 +27,26 @@ public class ChangeController {
     private ChangeService changeService;
 
     @PostMapping("/patrones-disponibles")
-    public ResponseEntity<ApiResponse<List<Certificate>>> getPatronAvailable(@RequestBody Change change){
+    public ResponseEntity<ApiResponse<List<Certificate>>> getPatronAvailable(@Valid @RequestBody Change change){
 
+        List<Certificate> result = changeService.getPatronesByMeasure(change); 
         return ResponseEntity.ok(
             new ApiResponse<>(
                 "success", 
-                "Conversión realizada correctamente", 
-                changeService.getPatronesByMeasure(change) )
+                "Patrones disponibles para esa medida y magnitud:", 
+                result)
         );
     }
 
     @PostMapping("/incertidumbre-patron")
-    public ResponseEntity<ApiResponse<Double>> getUncertaintyByPtn(@RequestBody UncertaintyByPtnDTO request){
+    public ResponseEntity<ApiResponse<Double>> getUncertaintyByPtn(@Valid  @RequestBody UncertaintyByPtnDTO request){
 
+        Double value = changeService.getUncertaintyByPtnS(request);
         return ResponseEntity.ok(
             new ApiResponse<>(
                 "success", 
                 "Conversión realizada correctamente", 
-                changeService.getUncertaintyByPtnS(request) ) 
+                value ) 
         );
     }
 }

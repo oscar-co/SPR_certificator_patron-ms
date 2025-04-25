@@ -1,6 +1,10 @@
 package com.certificator.patron_ms.CertificateTests;
 
+import com.certificator.patron_ms.DTO.ApiResponse;
 import com.certificator.patron_ms.Model.Certificate;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +15,6 @@ import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,6 +24,9 @@ public class CertificateControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private String readJson(String path) throws IOException {
         ClassPathResource resource = new ClassPathResource(path);
@@ -35,21 +41,31 @@ public class CertificateControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<>(json, headers);
 
-        ResponseEntity<Certificate> response = restTemplate.postForEntity("/api/patrones", request, Certificate.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones", request, String.class);
+        ApiResponse<Certificate> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<ApiResponse<Certificate>>() {});
+        Certificate cert = objectMapper.convertValue(responseObj.getData(), Certificate.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals("CERT-001", response.getBody().getCertificateNumber());
+        assertNotNull(cert);
+        assertEquals("CERT-001", cert.getCertificateNumber());
     }
 
     @Test
     void getAllCertificates_shouldReturnList() throws Exception {
-        String json = readJson("test-data/certificate-with-measurementsVarios.json");
 
-        Certificate[] certificates = restTemplate.getForObject("/api/patrones", Certificate[].class);
-        assertNotNull(certificates);
-        assertTrue(certificates.length >= 3);
-    }
+        ResponseEntity<String> response = restTemplate.getForEntity("/api/patrones", String.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ApiResponse<List<Certificate>> apiResponse = objectMapper.readValue(
+            response.getBody(),
+            new TypeReference<ApiResponse<List<Certificate>>>() {}
+        );
+        List<Certificate> certList = apiResponse.getData();
+
+        assertNotNull(certList);
+        assertTrue(certList.size() >= 3);
+}
 
     @Test
     void getCertificateById_shouldReturnCertificate() {
@@ -64,6 +80,6 @@ public class CertificateControllerIntegrationTest {
         restTemplate.delete("/api/patrones/1");
 
         ResponseEntity<String> response = restTemplate.getForEntity("/api/patrones/1", String.class);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode()); // O cambia si devuelves 404
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }

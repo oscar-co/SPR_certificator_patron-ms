@@ -1,11 +1,21 @@
 package com.certificator.patron_ms.Model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class Change {
 
+    @NotBlank(message = "La magnitud es obligatoria")
     private String magnitud;
+
+    @NotBlank(message = "La unidad de entrada es obligatoria")
     private String inputUnit;
+
     private String outputUnit;
+
+    @NotNull(message = "El valor de entrada es obligatorio")
     private Double inputValue;
+
     private Double outputValue;
 
     // // Default constructor

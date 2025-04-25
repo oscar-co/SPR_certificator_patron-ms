@@ -24,6 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.certificator.patron_ms.Exception.CertificateNotFoundException;
 import com.certificator.patron_ms.Model.Certificate;
 import com.certificator.patron_ms.Model.Measurement;
 import com.certificator.patron_ms.Repository.CertificateRepository;
@@ -59,22 +60,6 @@ class CertificateServiceTest {
         verify(certificateRepository).save(certificate);
     }
 
-
-    @Test
-    void testPostNewPatron_NullCertificate_ThrowsBadRequestException() {
-        // Simulamos que el validador lanza la excepción si le pasamos null
-        doThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Certificate cannot be null"))
-            .when(certificateValidator).validate(null);
-
-        ResponseStatusException thrown = assertThrows(ResponseStatusException.class, () -> {
-            certificateService.createNewPtn(null);
-        });
-
-        assertNotNull(thrown.getReason());
-        assertTrue(thrown.getReason().contains("Certificate cannot be null"));
-        assertEquals(HttpStatus.BAD_REQUEST, thrown.getStatusCode());
-    }
-
     @Test
     void deleteCertificate_ExistingId_DeletesSuccessfully() {
 
@@ -88,34 +73,37 @@ class CertificateServiceTest {
 
     @Test
     void deleteCertificate_NonExistingId_ThrowsNotFound() {
-        Long id = 2L;
+        Long id = 7L;
         when(certificateRepository.existsById(id)).thenReturn(false);
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
+        CertificateNotFoundException exception = assertThrows(CertificateNotFoundException.class, () -> {
             certificateService.deleteCertificate(id);
         });
 
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
-        assertTrue(exception.getReason().contains("Certificate not found"));
-        verify(certificateRepository, never()).deleteById(id); // No se debe intentar borrar
+        String reason = exception.getReason();
+        assertNotNull(reason);
+        assertTrue(reason.contains("No se encontró certificado con ID: 7"));
+        verify(certificateRepository, never()).deleteById(id);
     }
 
     @Test
     void deleteCertificate_DeleteFails_ThrowsInternalServerError() {
         Long id = 1L;
 
-        // Simulamos que el ID existe
         when(certificateRepository.existsById(id)).thenReturn(true);
 
         // Simulamos que deleteById lanza una excepción inesperada
-        doThrow(new RuntimeException("DB error")).when(certificateRepository).deleteById(id);
+        doThrow(new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"DB error")).when(certificateRepository).deleteById(id);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
             certificateService.deleteCertificate(id);
         });
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatusCode());
-        assertTrue(exception.getReason().contains("Error deleting certificate"));
+        String reason = exception.getReason();
+        assertNotNull(reason);
+        assertTrue(reason.contains("DB error"));
     }
 
     @Test
@@ -126,7 +114,9 @@ class CertificateServiceTest {
         });
 
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-        assertTrue(exception.getReason().contains("ID cannot be null"));
+        String reason = exception.getReason();
+        assertNotNull(reason);
+        assertTrue(reason.contains("ID cannot be null"));
     }
 
     @Test

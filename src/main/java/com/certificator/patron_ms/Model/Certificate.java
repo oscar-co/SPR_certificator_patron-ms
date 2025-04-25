@@ -12,6 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 @Entity
 public class Certificate {
 
@@ -19,13 +22,22 @@ public class Certificate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "El numero del certificado es obligatorio")
     private String certificateNumber;
+    
+    @NotBlank(message = "El insType del certificado es obligatorio")
     private String insType;
     private String brand;
     private String model;
+
+    @NotBlank(message = "El nameIdentify del certificado es obligatorio")
     private String nameIdentify;
     private String description;
+
+    @NotBlank(message = "El identificador del certificado es obligatorio")
     private String unit;
+
+    @NotNull(message = "La fecha de emisión es obligatoria")
     private LocalDate issueDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
