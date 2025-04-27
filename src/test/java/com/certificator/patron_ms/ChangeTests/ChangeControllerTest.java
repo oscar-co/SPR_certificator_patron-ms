@@ -59,7 +59,7 @@ public class ChangeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"magnitud\": \"temperatura\", \"inputUnit\": \"C\", \"inputValue\": 34.3}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(1));
+                .andExpect(jsonPath("$.data.length()").value(1));
     }
 
     @Test
@@ -70,6 +70,6 @@ public class ChangeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"inputUnit\": \"C\", \"inputValue\": 34.3, \"nameIdentify\": \"PTN-001\"}"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("0.12"));
+                .andExpect(jsonPath("$.data").value("0.12"));
     }
 }

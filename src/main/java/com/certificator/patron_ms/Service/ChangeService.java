@@ -26,9 +26,9 @@ public class ChangeService {
 
     public List<Certificate> getPatronesByMeasure(Change request) {
 
-        var magnitudFormatted = Utils.capitalize(request.getMagnitud().toLowerCase());
-        ConversionResult inputValue = unitConversionService.convertToReferenceUnit(magnitudFormatted,request.getInputUnit(), request.getInputValue());
-        return certificateRepository.findMatchingCertificates( magnitudFormatted, inputValue.getConvertedValue() );
+        String magnitudFormatted = Utils.capitalize(request.getMagnitud().toLowerCase());
+        ConversionResult conversionInputValue = unitConversionService.convertToReferenceUnit(magnitudFormatted, request.getInputUnit(), request.getInputValue());
+        return certificateRepository.findMatchingCertificates( magnitudFormatted, conversionInputValue.getConvertedValue() );
     }
 
     public Double getUncertaintyByPtnS(UncertaintyByPtnDTO request){

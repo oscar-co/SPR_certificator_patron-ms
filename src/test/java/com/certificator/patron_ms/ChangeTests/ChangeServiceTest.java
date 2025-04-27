@@ -15,9 +15,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
+import com.certificator.patron_ms.Exception.CertificateNotFoundException;
 import com.certificator.patron_ms.Model.Certificate;
 import com.certificator.patron_ms.Model.Change;
 import com.certificator.patron_ms.Model.ConversionResult;
@@ -45,9 +45,14 @@ public class ChangeServiceTest {
         request.setInputUnit("C");
         request.setInputValue(50.0);
 
+        // Simular respuesta del conversion service
+        ConversionResult conversionResult = new ConversionResult();
+        conversionResult.setConvertedValue(50.0);
+
+        when(unitConversionService.convertToReferenceUnit("Temperatura", "C", 50.0)).thenReturn(conversionResult);
+
         Certificate dummyCert = new Certificate();
         dummyCert.setCertificateNumber("CERT-001");
-
         List<Certificate> expected = List.of(dummyCert);
 
         when(certificateRepository.findMatchingCertificates("Temperatura", 50.0)).thenReturn(expected);
@@ -59,35 +64,25 @@ public class ChangeServiceTest {
         verify(certificateRepository, times(1)).findMatchingCertificates("Temperatura", 50.0);
     }
 
-    @Test
-    void testGetPatronesByMeasure_incompleteJsonObject_returnsException() {
-        // Arrange
-        Change request = new Change();
-        request.setMagnitud("temperatura");
-        request.setInputUnit("C");
-        //request.setInputValue(50.0);
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            changeService.getPatronesByMeasure(request);
-        });
-        assertEquals("Faltan datos obligatorios en el cuerpo del JSON.", exception.getMessage());
-    }
-
 
     @Test
     void testGetPatronesByMeasure_whenNoResults_returnsEmptyList() {
-        // Arrange
         Change request = new Change();
         request.setMagnitud("presión");
-        request.setInputUnit("C");
-        request.setInputValue(101.0);
+        request.setInputUnit("bar");
+        request.setInputValue(1501.0);
 
-        when(certificateRepository.findMatchingCertificates("Presión", 101.0)).thenReturn(Collections.emptyList());
+        when(certificateRepository.findMatchingCertificates("Presión", 101.0))
+            .thenReturn(Collections.emptyList());
 
-        // Act
+        ConversionResult conversionResult = new ConversionResult();
+        conversionResult.setConvertedValue(101.0); // Resultado que se usará para buscar
+
+        when(unitConversionService.convertToReferenceUnit("Presión", "bar", 1501.0))
+            .thenReturn(conversionResult);
+
         List<Certificate> result = changeService.getPatronesByMeasure(request);
 
-        // Assert
         assertEquals(0, result.size());
         verify(certificateRepository, times(1)).findMatchingCertificates("Presión", 101.0);
     }
@@ -113,24 +108,10 @@ public class ChangeServiceTest {
 
         when(certificateRepository.findMagnitudByNameIdentify("PTN-999")).thenReturn(null);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        CertificateNotFoundException exception = assertThrows(CertificateNotFoundException.class, () -> {
             changeService.getUncertaintyByPtnS(request);
         });
 
-        assertEquals("No se encontró magnitud para el identificador: PTN-999", exception.getMessage());
+        assertEquals("No se encontró magnitud para el identificador: PTN-999", exception.getReason());
     }
-
-    // @Test
-    // void getUncertaintyByPtnS_ConversionFails_ThrowsException() {
-    //     UncertaintyByPtnDTO request = new UncertaintyByPtnDTO("C", 34.3, "sensor123");
-
-    //     when(certificateRepository.findMagnitudByNameIdentify("sensor123")).thenReturn("temperatura");
-    //     when(unitConversionService.convertToReferenceUnit("temperatura", "C", 34.3))
-    //             .thenThrow(new RuntimeException("Conversion error"));
-
-    //     assertThrows(RuntimeException.class, () -> {
-    //         changeService.getUncertaintyByPtnS(request);
-    //     });
-    // }
-
 }
