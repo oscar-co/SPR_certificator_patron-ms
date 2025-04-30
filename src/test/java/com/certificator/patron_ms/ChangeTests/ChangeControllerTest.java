@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -19,8 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static com.certificator.patron_ms.utils.TestUtils.readJsonFromFile;
 
-
-
+import com.certificator.patron_ms.Config.security.SecurityConfig;
 import com.certificator.patron_ms.Controller.ChangeController;
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
 import com.certificator.patron_ms.Model.Certificate;
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @WebMvcTest(ChangeController.class)
+@Import(SecurityConfig.class)
 public class ChangeControllerTest {
 
     @Autowired
@@ -48,6 +50,7 @@ public class ChangeControllerTest {
 
 
     @Test
+    @WithMockUser(username = "user", roles = {"USER"})
     void getPatronAvailable_returnsAvailableList() throws Exception {
 
         String json = readJsonFromFile("test-data/certificate-with-measurements.json");
@@ -63,6 +66,7 @@ public class ChangeControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void getUncertaintyByPtn_returnsValue() throws Exception {
         when(changeService.getUncertaintyByPtnS(any(UncertaintyByPtnDTO.class))).thenReturn(0.12);
 
