@@ -1,20 +1,19 @@
-package com.certificator.patron_ms.Controller;
+package com.certificator.patron_ms.Change;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.certificator.patron_ms.Certificate.Certificate;
 import com.certificator.patron_ms.DTO.ApiResponse;
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
-import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Model.Change;
-import com.certificator.patron_ms.Service.ChangeService;
 
 import jakarta.validation.Valid;
 
@@ -50,4 +49,16 @@ public class ChangeController {
                 value ) 
         );
     }
+
+    @GetMapping("/unidades/{magnitud}")
+    public ResponseEntity<ApiResponse<List<String>>> getUnitsByMagnitu(@PathVariable String magnitud) throws Exception{
+        List<String> units = changeService.getUnitsByMagnitu(magnitud);
+        return ResponseEntity.ok(
+            new ApiResponse<>(
+                "success", 
+                "Unidades obtenidad correctamente", 
+                units )
+        );
+    }
+
 }

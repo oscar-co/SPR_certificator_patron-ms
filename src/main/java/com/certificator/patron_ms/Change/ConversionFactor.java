@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Model;
+package com.certificator.patron_ms.Change;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +19,9 @@ public class ConversionFactor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "magnitud")
+    private String magnitud;
+
     @Column(name = "u_entrada")
     private String uEntrada;
 
@@ -29,6 +32,9 @@ public class ConversionFactor {
     private double factor;
 
     // Getters y setters
+    public String getMagnitud() { return magnitud; }
+    public void setMagnitud(String magnitud) { this.magnitud = magnitud; }
+
     public String getuEntrada() { return uEntrada; }
     public void setuEntrada(String uEntrada) { this.uEntrada = uEntrada; }
 

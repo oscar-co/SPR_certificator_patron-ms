@@ -1,53 +1,155 @@
 DELETE FROM conversion_factor;
 
--- Pa a otras unidades
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'kPa', 0.001);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'MPa', 0.000001);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'bar', 0.00001);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'mbar', 0.01);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'atm', 9.8692e-6);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'mmHg', 0.00750062);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'cmHg', 0.000750062);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'psi', 0.000145038);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('Pa', 'kg/cm²', 1.0197e-5);
+-- Presiones
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'Pa', 'bar', 1e-05);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'Pa', 'mbar', 0.01);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'Pa', 'mmHg', 0.007500637554192106);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'Pa', 'mmH2O', 0.10197162129779283);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'Pa', 'psi', 0.0001450376807894691);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'Pa', 'kg/cm²', 1.0197162129779282e-05);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'bar', 'Pa', 100000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'bar', 'mbar', 1000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'bar', 'mmHg', 750.0637554192106);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'bar', 'mmH2O', 10197.162129779283);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'bar', 'psi', 14.50376807894691);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'bar', 'kg/cm²', 1.0197162129779282);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mbar', 'Pa', 100.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mbar', 'bar', 0.001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mbar', 'mmHg', 0.7500637554192107);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mbar', 'mmH2O', 10.197162129779283);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mbar', 'psi', 0.01450376807894691);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mbar', 'kg/cm²', 0.0010197162129779282);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmHg', 'Pa', 133.322);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmHg', 'bar', 0.00133322);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmHg', 'mbar', 1.33322);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmHg', 'mmH2O', 13.595060494664336);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmHg', 'psi', 0.0193367136782136);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmHg', 'kg/cm²', 0.0013595060494664335);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmH2O', 'Pa', 9.80665);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmH2O', 'bar', 9.80665e-05);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmH2O', 'mbar', 0.0980665);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmH2O', 'mmHg', 0.07355612727081802);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmH2O', 'psi', 0.0014223337723140472);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'mmH2O', 'kg/cm²', 9.999999999999999e-05);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'psi', 'Pa', 6894.76);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'psi', 'bar', 0.0689476);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'psi', 'mbar', 68.94760000000001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'psi', 'mmHg', 51.71509578314157);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'psi', 'mmH2O', 703.0698556591701);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'psi', 'kg/cm²', 0.07030698556591701);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'kg/cm²', 'Pa', 98066.5);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'kg/cm²', 'bar', 0.980665);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'kg/cm²', 'mbar', 980.665);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'kg/cm²', 'mmHg', 735.5612727081801);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'kg/cm²', 'mmH2O', 10000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('presion', 'kg/cm²', 'psi', 14.223337723140471);
 
--- bar a otras unidades
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'Pa', 100000);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'kPa', 100);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'MPa', 0.1);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'mbar', 1000);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'atm', 0.986923);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'mmHg', 750.062);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'cmHg', 75.0062);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'psi', 14.5038);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('bar', 'kg/cm²', 1.0197);
 
--- atm a otras unidades
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('atm', 'Pa', 101325);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('atm', 'kPa', 101.325);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('atm', 'MPa', 0.101325);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('atm', 'bar', 1.01325);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('atm', 'mbar', 1013.25);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('atm', 'mmHg', 760);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('atm', 'psi', 14.6959);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('atm', 'kg/cm²', 1.03323);
+-- temperatura
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('temperatura', 'C', 'K', 1);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('temperatura', 'K', 'C', 1);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('temperatura', 'C', 'F', 1);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('temperatura', 'F', 'C', 1);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('temperatura', 'K', 'F', 1);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('temperatura', 'F', 'K', 1);
 
--- psi a otras unidades
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('psi', 'Pa', 6894.76);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('psi', 'kPa', 6.89476);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('psi', 'bar', 0.0689476);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('psi', 'atm', 0.068046);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('psi', 'kg/cm²', 0.070307);
 
--- mbar a otras unidades
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('mbar', 'Pa', 100);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('mbar', 'bar', 0.001);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('mbar', 'kPa', 0.1);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('mbar', 'atm', 9.8692e-4);
+-- Masa
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'kg', 'g', 0.001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'kg', 'mg', 1e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'kg', 'µg', 1e-09);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'kg', 'ton', 1000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'g', 'kg', 1000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'g', 'mg', 0.001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'g', 'µg', 1e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'g', 'ton', 1000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'mg', 'kg', 1000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'mg', 'g', 1000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'mg', 'µg', 0.001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'mg', 'ton', 1000000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'µg', 'kg', 1000000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'µg', 'g', 1000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'µg', 'mg', 1000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'µg', 'ton', 1000000000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'ton', 'kg', 0.001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'ton', 'g', 1e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'ton', 'mg', 1e-09);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('masa', 'ton', 'µg', 1e-12);
 
--- mmHg a otras unidades
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('mmHg', 'Pa', 133.322);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('mmHg', 'bar', 0.00133322);
-INSERT INTO conversion_factor (u_entrada, u_salida, factor) VALUES ('mmHg', 'atm', 0.00131579);
 
--- Puedes seguir agregando combinaciones si quieres cerrar el 10x10 completo
+-- Longitud
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'km', 'm', 1000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'km', 'cm', 100000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'km', 'mm', 1000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'km', 'ft', 3280.839895013123);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'km', 'mi', 0.6213727366498067);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'km', 'µm', 1000000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'm', 'km', 0.001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'm', 'cm', 100.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'm', 'mm', 1000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'm', 'ft', 3.280839895013123);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'm', 'mi', 0.0006213727366498068);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'm', 'µm', 1000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'cm', 'km', 1e-05);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'cm', 'm', 0.01);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'cm', 'mm', 10.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'cm', 'ft', 0.03280839895013123);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'cm', 'mi', 6.213727366498068e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'cm', 'µm', 10000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mm', 'km', 1e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mm', 'm', 0.001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mm', 'cm', 0.1);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mm', 'ft', 0.0032808398950131233);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mm', 'mi', 6.213727366498068e-07);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mm', 'µm', 1000.0000000000001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'ft', 'km', 0.00030480000000000004);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'ft', 'm', 0.3048);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'ft', 'cm', 30.48);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'ft', 'mm', 304.8);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'ft', 'mi', 0.0001893944101308611);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'ft', 'µm', 304800.00000000006);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mi', 'km', 1.60934);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mi', 'm', 1609.34);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mi', 'cm', 160934.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mi', 'mm', 1609340.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mi', 'ft', 5279.98687664042);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'mi', 'µm', 1609340000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'µm', 'km', 9.999999999999999e-10);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'µm', 'm', 1e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'µm', 'cm', 9.999999999999999e-05);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'µm', 'mm', 0.001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'µm', 'ft', 3.280839895013123e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('longitud', 'µm', 'mi', 6.213727366498067e-10);
+
+
+-- Area
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'm²', 'km²', 1e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'm²', 'ha', 0.0001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'm²', 'cm²', 10000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'm²', 'ft²', 10.763915051182416);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'm²', 'mi²', 3.86102158592535e-07);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'km²', 'm²', 1000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'km²', 'ha', 100.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'km²', 'cm²', 10000000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'km²', 'ft²', 10763915.051182415);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'km²', 'mi²', 0.38610215859253505);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ha', 'm²', 10000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ha', 'km²', 0.01);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ha', 'cm²', 100000000.0);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ha', 'ft²', 107639.15051182416);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ha', 'mi²', 0.0038610215859253504);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'cm²', 'm²', 0.0001);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'cm²', 'km²', 1e-10);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'cm²', 'ha', 1e-08);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'cm²', 'ft²', 0.0010763915051182416);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'cm²', 'mi²', 3.8610215859253505e-11);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ft²', 'm²', 0.092903);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ft²', 'km²', 9.2903e-08);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ft²', 'ha', 9.2903e-06);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ft²', 'cm²', 929.03);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'ft²', 'mi²', 3.5870048839722284e-08);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'mi²', 'm²', 2589988.11);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'mi²', 'km²', 2.5899881099999997);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'mi²', 'ha', 258.998811);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'mi²', 'cm²', 25899881099.999996);
+INSERT INTO conversion_factor (magnitud, u_entrada, u_salida, factor) VALUES ('área', 'mi²', 'ft²', 27878411.9996125);

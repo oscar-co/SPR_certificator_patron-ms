@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Controller;
+package com.certificator.patron_ms.Certificate;
 
 import java.util.List;
 
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.certificator.patron_ms.DTO.ApiResponse;
-import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Service.CertificateService;
 
 import jakarta.validation.Valid;
 
@@ -81,5 +79,4 @@ public class CertificateController {
                 certificateService.updateCertificateById(id, certificate) )
         );
     }
-    
 }

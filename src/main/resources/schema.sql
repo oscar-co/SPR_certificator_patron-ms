@@ -4,3 +4,4 @@ CREATE TABLE IF NOT EXISTS conversion_factor (
     u_salida VARCHAR(50) NOT NULL,
     factor DOUBLE NOT NULL
 );
+ALTER TABLE conversion_factor ADD COLUMN IF NOT EXISTS magnitud VARCHAR(50);

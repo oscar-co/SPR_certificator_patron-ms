@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Repository.CertificateRepository;
+import com.certificator.patron_ms.Certificate.Certificate;
+import com.certificator.patron_ms.Certificate.CertificateRepository;
 
 @Component
 public class CertificateValidator {

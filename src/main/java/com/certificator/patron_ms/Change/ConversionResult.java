@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Model;
+package com.certificator.patron_ms.Change;
 
 
 public class ConversionResult {

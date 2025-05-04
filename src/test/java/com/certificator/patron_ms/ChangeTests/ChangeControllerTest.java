@@ -15,18 +15,17 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static com.certificator.patron_ms.utils.TestUtils.readJsonFromFile;
 
+import com.certificator.patron_ms.Certificate.Certificate;
+import com.certificator.patron_ms.Change.Change;
+import com.certificator.patron_ms.Change.ChangeController;
+import com.certificator.patron_ms.Change.ChangeService;
 import com.certificator.patron_ms.Config.security.SecurityConfig;
-import com.certificator.patron_ms.Controller.ChangeController;
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
-import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Model.Change;
-import com.certificator.patron_ms.Service.ChangeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 

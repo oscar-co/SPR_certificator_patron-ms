@@ -1,9 +1,6 @@
-package com.certificator.patron_ms.Repository;
+package com.certificator.patron_ms.Certificate;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.certificator.patron_ms.Model.Certificate;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 

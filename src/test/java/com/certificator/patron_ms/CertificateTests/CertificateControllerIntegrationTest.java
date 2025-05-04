@@ -1,7 +1,7 @@
 package com.certificator.patron_ms.CertificateTests;
 
+import com.certificator.patron_ms.Certificate.Certificate;
 import com.certificator.patron_ms.DTO.ApiResponse;
-import com.certificator.patron_ms.Model.Certificate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

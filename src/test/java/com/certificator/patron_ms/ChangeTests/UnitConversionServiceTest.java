@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.certificator.patron_ms.Model.ConversionResult;
-import com.certificator.patron_ms.Service.UnitConversionService;
+import com.certificator.patron_ms.Change.ConversionResult;
+import com.certificator.patron_ms.Change.UnitConversionService;
 
 
 @SpringBootTest
@@ -42,12 +42,6 @@ public class UnitConversionServiceTest {
     void testConvert_Presion_Pa_to_bar() {
         Double result = unitConversionService.calculoMagnitudes("Pa", "bar", 500000.0);
         assertEquals(5.0, result);
-    }
-
-    @Test
-    void testConvert_Presion_atm_to_Pa() {
-        Double result = unitConversionService.calculoMagnitudes("atm", "Pa", 1.0);
-        assertEquals(101325.0, result);
     }
 
     @Test

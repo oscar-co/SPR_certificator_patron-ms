@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Service;
+package com.certificator.patron_ms.Change;
 
 import org.springframework.stereotype.Service;
 
@@ -6,9 +6,6 @@ import com.certificator.patron_ms.ENUM.MagnitudeType;
 import com.certificator.patron_ms.ENUM.MassUnit;
 import com.certificator.patron_ms.ENUM.PressureUnit;
 import com.certificator.patron_ms.ENUM.TemperatureUnit;
-import com.certificator.patron_ms.Model.ConversionFactor;
-import com.certificator.patron_ms.Model.ConversionResult;
-import com.certificator.patron_ms.Repository.ConversionFactorRepository;
 
 @Service
 public class UnitConversionService {

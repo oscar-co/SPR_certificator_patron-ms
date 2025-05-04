@@ -16,14 +16,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.certificator.patron_ms.Certificate.Certificate;
+import com.certificator.patron_ms.Certificate.CertificateRepository;
+import com.certificator.patron_ms.Change.Change;
+import com.certificator.patron_ms.Change.ChangeService;
+import com.certificator.patron_ms.Change.ConversionResult;
+import com.certificator.patron_ms.Change.UnitConversionService;
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
 import com.certificator.patron_ms.Exception.CertificateNotFoundException;
-import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Model.Change;
-import com.certificator.patron_ms.Model.ConversionResult;
-import com.certificator.patron_ms.Repository.CertificateRepository;
-import com.certificator.patron_ms.Service.ChangeService;
-import com.certificator.patron_ms.Service.UnitConversionService;
 
 @ExtendWith(MockitoExtension.class)
 public class ChangeServiceTest {
@@ -68,23 +68,23 @@ public class ChangeServiceTest {
     @Test
     void testGetPatronesByMeasure_whenNoResults_returnsEmptyList() {
         Change request = new Change();
-        request.setMagnitud("presión");
+        request.setMagnitud("Presion");
         request.setInputUnit("bar");
         request.setInputValue(1501.0);
 
-        when(certificateRepository.findMatchingCertificates("Presión", 101.0))
+        when(certificateRepository.findMatchingCertificates("Presion", 101.0))
             .thenReturn(Collections.emptyList());
 
         ConversionResult conversionResult = new ConversionResult();
         conversionResult.setConvertedValue(101.0); // Resultado que se usará para buscar
 
-        when(unitConversionService.convertToReferenceUnit("Presión", "bar", 1501.0))
+        when(unitConversionService.convertToReferenceUnit("Presion", "bar", 1501.0))
             .thenReturn(conversionResult);
 
         List<Certificate> result = changeService.getPatronesByMeasure(request);
 
         assertEquals(0, result.size());
-        verify(certificateRepository, times(1)).findMatchingCertificates("Presión", 101.0);
+        verify(certificateRepository, times(1)).findMatchingCertificates("Presion", 101.0);
     }
 
     @Test

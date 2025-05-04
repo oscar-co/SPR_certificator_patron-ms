@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Model;
+package com.certificator.patron_ms.Certificate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

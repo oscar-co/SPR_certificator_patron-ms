@@ -3,7 +3,7 @@ package com.certificator.patron_ms.CertificateTests;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.certificator.patron_ms.Model.Certificate;
+import com.certificator.patron_ms.Certificate.Certificate;
 import com.certificator.patron_ms.utils.CertificateValidator;
 
 import org.junit.jupiter.api.BeforeEach;

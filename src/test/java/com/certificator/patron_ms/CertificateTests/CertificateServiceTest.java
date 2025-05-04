@@ -24,11 +24,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.certificator.patron_ms.Certificate.Certificate;
+import com.certificator.patron_ms.Certificate.CertificateRepository;
+import com.certificator.patron_ms.Certificate.CertificateService;
+import com.certificator.patron_ms.Certificate.Measurement;
 import com.certificator.patron_ms.Exception.CertificateNotFoundException;
-import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Model.Measurement;
-import com.certificator.patron_ms.Repository.CertificateRepository;
-import com.certificator.patron_ms.Service.CertificateService;
 import com.certificator.patron_ms.utils.CertificateValidator;
 
 @ExtendWith(MockitoExtension.class)

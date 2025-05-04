@@ -25,10 +25,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+import com.certificator.patron_ms.Certificate.Certificate;
+import com.certificator.patron_ms.Certificate.CertificateController;
+import com.certificator.patron_ms.Certificate.CertificateService;
 import com.certificator.patron_ms.Config.security.SecurityConfig;
-import com.certificator.patron_ms.Controller.CertificateController;
-import com.certificator.patron_ms.Model.Certificate;
-import com.certificator.patron_ms.Service.CertificateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.certificator.patron_ms.Model.ConversionResult;
-import com.certificator.patron_ms.Service.UnitConversionService;
+import com.certificator.patron_ms.Change.ConversionResult;
+import com.certificator.patron_ms.Change.UnitConversionService;
 
 @SpringBootTest
 public class ChangeUnitsTest {
