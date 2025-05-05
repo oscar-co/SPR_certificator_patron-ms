@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.certificator.patron_ms.Certificate.Certificate;
 import com.certificator.patron_ms.Certificate.CertificateRepository;
+import com.certificator.patron_ms.DTO.ChangeRequestDTO;
+import com.certificator.patron_ms.DTO.ChangeResponseDTO;
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
 import com.certificator.patron_ms.Exception.CertificateNotFoundException;
 import com.certificator.patron_ms.utils.Utils;
@@ -27,7 +29,7 @@ public class ChangeService {
     public List<Certificate> getPatronesByMeasure(Change request) {
 
         String magnitudFormatted = Utils.capitalize(request.getMagnitud().toLowerCase());
-        ConversionResult conversionInputValue = unitConversionService.convertToReferenceUnit(magnitudFormatted, request.getInputUnit(), request.getInputValue());
+        ConversionResult conversionInputValue = unitConversionService.convertUnits(magnitudFormatted, request.getInputUnit(), null, request.getInputValue());
         return certificateRepository.findMatchingCertificates( magnitudFormatted, conversionInputValue.getConvertedValue() );
     }
 
@@ -37,7 +39,7 @@ public class ChangeService {
         if (magnitud == null) {
             throw new CertificateNotFoundException("No se encontró magnitud para el identificador: " + request.getNameIdentify());
         }
-        ConversionResult conversionResult = unitConversionService.convertToReferenceUnit(magnitud, request.getInputUnit(), request.getInputValue());
+        ConversionResult conversionResult = unitConversionService.convertUnits(magnitud, request.getInputUnit(), null, request.getInputValue());
         Optional<Double> uncertainty = certificateRepository.findUncertaintyAboveReferenceByNameIdentify(
             request.getNameIdentify(), conversionResult.getConvertedValue());        
         return uncertainty.orElse(null);
@@ -49,4 +51,18 @@ public class ChangeService {
         }
         return conversionFactorRepository.findDistinctInputUnitsByMagnitud(magnitud);
     }
+
+
+    public ChangeResponseDTO convert(ChangeRequestDTO dto) throws Exception {
+
+        ConversionResult result = unitConversionService.convertUnits(dto.getMagnitud(), dto.getInputUnit(), dto.getOutputUnit(), dto.getInputValue());
+        return new ChangeResponseDTO(
+            dto.getInputValue(),
+            result.getConvertedValue(),
+            dto.getInputUnit(),
+            dto.getOutputUnit(),
+            dto.getMagnitud()
+        );
+    }
+
 }

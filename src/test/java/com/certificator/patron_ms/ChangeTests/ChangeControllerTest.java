@@ -25,6 +25,8 @@ import com.certificator.patron_ms.Change.Change;
 import com.certificator.patron_ms.Change.ChangeController;
 import com.certificator.patron_ms.Change.ChangeService;
 import com.certificator.patron_ms.Config.security.SecurityConfig;
+import com.certificator.patron_ms.DTO.ChangeRequestDTO;
+import com.certificator.patron_ms.DTO.ChangeResponseDTO;
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -74,5 +76,46 @@ public class ChangeControllerTest {
                 .content("{\"inputUnit\": \"C\", \"inputValue\": 34.3, \"nameIdentify\": \"PTN-001\"}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").value("0.12"));
+    }
+
+    @Test
+    @WithMockUser(username = "user", roles = {"USER"})
+    void getChangeByUnitsAndValue_returnsConversionResult() throws Exception {
+
+        ChangeRequestDTO requestDto = new ChangeRequestDTO("presion", "bar", "mbar", 34.0);
+        ChangeResponseDTO responseDto = new ChangeResponseDTO(34.0, 34000.0, "bar", "mbar", "presion");
+
+        when(changeService.convert(any(ChangeRequestDTO.class))).thenReturn(responseDto);
+
+        // Act & Assert: realiza el POST y valida respuesta
+        mockMvc.perform(post("/api/patrones/cambio")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(requestDto)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.status").value("success"))
+            .andExpect(jsonPath("$.data.inputValue").value(34.0))
+            .andExpect(jsonPath("$.data.outputValue").value(34000.0))
+            .andExpect(jsonPath("$.data.inputUnit").value("bar"))
+            .andExpect(jsonPath("$.data.outputUnit").value("mbar"))
+            .andExpect(jsonPath("$.data.magnitud").value("presion"));
+    }
+
+    @Test
+    @WithMockUser(username = "user", roles = {"USER"})
+    void convert_shouldReturnError_whenFactorNotFound() throws Exception {
+
+        ChangeRequestDTO requestDto = new ChangeRequestDTO("presion", "bar", "mbar", 346767.0);
+
+        when(changeService.convert(any(ChangeRequestDTO.class)))
+            .thenThrow(new RuntimeException("No se encontró factor de conversión"));
+
+        // Act & Assert: esperamos un 500 del servidor por la excepción lanzada
+        mockMvc.perform(post("/api/patrones/cambio")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(requestDto)))
+            .andExpect(status().isInternalServerError())
+            .andExpect(jsonPath("$.status").value("error"))
+            .andExpect(jsonPath("$.message").value("Error en la llamada"))
+            .andExpect(jsonPath("$.data").value("No se encontró factor de conversión"));
     }
 }

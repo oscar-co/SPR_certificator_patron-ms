@@ -3,7 +3,9 @@ package com.certificator.patron_ms.ENUM;
 public enum MagnitudeType {
     TEMPERATURA,
     PRESION,
-    MASA;
+    MASA,
+    LONGITUD,
+    AREA;
 
     public static MagnitudeType fromString(String value) {
         for (MagnitudeType m : values()) {

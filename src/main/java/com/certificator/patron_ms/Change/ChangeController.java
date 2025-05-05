@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.certificator.patron_ms.Certificate.Certificate;
 import com.certificator.patron_ms.DTO.ApiResponse;
+import com.certificator.patron_ms.DTO.ChangeRequestDTO;
+import com.certificator.patron_ms.DTO.ChangeResponseDTO;
 import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
 
 import jakarta.validation.Valid;
@@ -21,7 +23,6 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/patrones")
 public class ChangeController {
-
 
     @Autowired
     private ChangeService changeService;
@@ -61,4 +62,16 @@ public class ChangeController {
         );
     }
 
+    @PostMapping("/cambio")
+    public ResponseEntity<ApiResponse<ChangeResponseDTO>> getChangeByUnitsAndValue(@Valid @RequestBody ChangeRequestDTO request) throws Exception {
+
+        ChangeResponseDTO response = changeService.convert(request);
+        return ResponseEntity.ok(
+            new ApiResponse<>(
+                "success",
+                "Conversión realizada correctamente",
+                response
+            )
+        );
+    }
 }

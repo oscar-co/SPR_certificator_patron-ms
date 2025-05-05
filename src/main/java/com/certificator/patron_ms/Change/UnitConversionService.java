@@ -2,10 +2,13 @@ package com.certificator.patron_ms.Change;
 
 import org.springframework.stereotype.Service;
 
+import com.certificator.patron_ms.ENUM.AreaUnit;
+import com.certificator.patron_ms.ENUM.LongitudeUnit;
 import com.certificator.patron_ms.ENUM.MagnitudeType;
 import com.certificator.patron_ms.ENUM.MassUnit;
 import com.certificator.patron_ms.ENUM.PressureUnit;
 import com.certificator.patron_ms.ENUM.TemperatureUnit;
+import com.certificator.patron_ms.utils.Utils;
 
 @Service
 public class UnitConversionService {
@@ -17,81 +20,109 @@ public class UnitConversionService {
     }
 
     public Double calculoMagnitudes(String uEntrada, String uSalida, double vEntrada) {
+        if(uEntrada.equalsIgnoreCase(uSalida)) return vEntrada;
         ConversionFactor factor = factorRepository.findByUEntradaAndUSalida(uEntrada, uSalida)
             .orElseThrow(() -> new IllegalArgumentException("Factor no encontrado para " + uEntrada + " → " + uSalida));
 
         return vEntrada * factor.getFactor();
     }
 
-    // Posiblemente lo vaya a necesitar para hacer simples conbersiones de tª
-    // public static double calculoTemperatura(String eUnit, String sUnit, double eValue) {
+    //TODO CUANDO EL FRONT hace una conversion de una presion por ejemplo y luego pasas a hacer una de temperatura, falla diciendo que no recooce la unidad C de Celsisus
 
-    //     if (!TemperatureUnit.isValid(eUnit) || !TemperatureUnit.isValid(sUnit)) {
-    //         throw new UnsupportedOperationException("Conversión de temperatura no soportada: " + eUnit + " → " + sUnit);
-    //     }
-
-    //     if (eUnit.equals("K") && sUnit.equals("C")) {
-    //         return eValue - 273.15;
-    //     } else if (eUnit.equals("F") && sUnit.equals("C")) {
-    //         return (eValue - 32) * 5 / 9;
-    //     } else if (eUnit.equals("C") && sUnit.equals("C")) {
-    //         return eValue;
-    //     } else {
-    //         throw new UnsupportedOperationException("Unsupported temperature conversion from " + eUnit + " to " + sUnit);
-    //     }
-    // }
-
-    public static Double calculoTemperatura(String eUnit, Double eValue) {
-
-        String sUnit = "C";
-        if (eUnit.equals("K")) {
-            return eValue - 273.15;
-        } else if (eUnit.equals("F")) {
-            return (eValue - 32) * 5 / 9;
-        } else if (eUnit.equals("C")) {
-            return eValue;
-        } else {
-            throw new UnsupportedOperationException("Unsupported temperature conversion from " + eUnit + " to " + sUnit);
+    public static Double calculoTemperatura(String iUnit, String oUnit, Double eValue) {
+        iUnit = iUnit.toUpperCase();
+        oUnit = oUnit.toUpperCase();
+    
+        if (iUnit.equals(oUnit)) return eValue;
+    
+        // Paso intermedio: convertir a Celsius
+        double tempC;
+        switch (iUnit) {
+            case "C":
+                tempC = eValue;
+                break;
+            case "F":
+                tempC = (eValue - 32) * 5.0 / 9.0;
+                break;
+            case "K":
+                tempC = eValue - 273.15;
+                break;
+            default:
+                throw new UnsupportedOperationException("Unsupported temperature conversion from: " + iUnit + " to " + oUnit);
+        }
+    
+        // Convertir de Celsius a unidad de salida
+        switch (oUnit) {
+            case "C":
+                return tempC;
+            case "F":
+                return tempC * 9.0 / 5.0 + 32;
+            case "K":
+                return tempC + 273.15;
+            default:
+                throw new UnsupportedOperationException("Unidad de salida no soportada: " + oUnit);
         }
     }
 
-    public ConversionResult convertToReferenceUnit(String magnitud, String unit, Double value){
-
+    public ConversionResult convertUnits(String magnitud, String inputUnit, String outputUnit, Double value) {
         Double originalValue = value;
         MagnitudeType magnitudeType = MagnitudeType.fromString(magnitud);
         ConversionResult result = new ConversionResult();
-
+    
+        // Si no se especifica unidad de salida, usamos la de referencia
+        if (outputUnit == null || outputUnit.isBlank()) {
+            outputUnit = Utils.getDefaultReferenceUnit(magnitudeType); // e.g. "C", "bar", "g"
+        }
+    
         switch (magnitudeType) {
             case TEMPERATURA:
-                if (!TemperatureUnit.isValid(unit)) {
-                    throw new IllegalArgumentException("Temperature unit not supported: " + unit);
-                }
-                result.setUnit("C");
-                result.setConvertedValue(calculoTemperatura(unit, value));
-            break;
-        
-            case PRESION:
-                if (!PressureUnit.isValid(unit)) {
-                    throw new IllegalArgumentException("Pressure unit not supported: " + unit);
-                }
-                result.setUnit("bar");
-                result.setConvertedValue(calculoMagnitudes(unit, "bar", value));
-            break;
+                TemperatureUnit.fromString(inputUnit); // valida y lanza si no es válido
+                TemperatureUnit.fromString(outputUnit);
 
-            // TODO se queda tb pendiente de meter los factores de cambio de masa
-            // case MASA:
-            //     if (!MassUnit.isValid(unit)) {
-            //         throw new IllegalArgumentException("Mass unit not supported: " + unit);
-            //     }
-            //     result.setUnit("g");
-            //     result.setConvertedValue(calculoMagnitudes(unit, "g", value));
-            // break;
-        
-            // TODO
+                result.setUnit(outputUnit);
+                result.setConvertedValue(calculoTemperatura(inputUnit, outputUnit, value));
+                break;
+    
+            case PRESION:
+                PressureUnit.fromString(inputUnit); // valida y lanza si no es válido
+                PressureUnit.fromString(outputUnit);
+
+                result.setUnit(outputUnit);
+                result.setConvertedValue(calculoMagnitudes(inputUnit, outputUnit, value));
+                break;
+
+            case MASA:
+                MassUnit.fromString(inputUnit); // valida y lanza si no es válido
+                MassUnit.fromString(outputUnit);
+
+                result.setUnit(outputUnit);
+                result.setConvertedValue(calculoMagnitudes(inputUnit, outputUnit, value));
+                break;
+
+            case LONGITUD:
+                LongitudeUnit.fromString(inputUnit); // valida y lanza si no es válido
+                LongitudeUnit.fromString(outputUnit);
+
+                result.setUnit(outputUnit);
+                result.setConvertedValue(calculoMagnitudes(inputUnit, outputUnit, value));
+                break;
+
+            case AREA:
+                AreaUnit.fromString(inputUnit); // valida y lanza si no es válido
+                AreaUnit.fromString(outputUnit);
+                
+                result.setUnit(outputUnit);
+                result.setConvertedValue(calculoMagnitudes(inputUnit, outputUnit, value));
+                break;
+    
+            // case MASA, etc.
+    
             default:
                 throw new IllegalArgumentException("Magnitud no soportada: " + magnitud);
         }
+    
         result.setOriginalValue(originalValue);
         return result;
     }
+    
 }

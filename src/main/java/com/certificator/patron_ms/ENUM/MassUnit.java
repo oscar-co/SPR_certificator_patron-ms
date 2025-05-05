@@ -1,14 +1,14 @@
 package com.certificator.patron_ms.ENUM;
 
 public enum MassUnit {
-    G, KG, MG;
+    G, KG, MG, LB;
 
-    public static boolean isValid(String unit) {
+    public static MassUnit fromString(String unit) {
         for (MassUnit u : values()) {
             if (u.name().equalsIgnoreCase(unit)) {
-                return true;
+                return u;
             }
         }
-        return false;
+        throw new IllegalArgumentException("Mass unit not supported: " + unit);
     }
 }

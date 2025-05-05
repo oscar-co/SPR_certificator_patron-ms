@@ -35,6 +35,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, "/**").hasAnyRole("USER", "ADMIN")
             .requestMatchers(HttpMethod.POST, "/api/patrones/patrones-disponibles").hasAnyRole("USER", "ADMIN")
             .requestMatchers(HttpMethod.POST, "/api/patrones/incertidumbre-patron").hasAnyRole("USER", "ADMIN")
+            .requestMatchers(HttpMethod.POST, "/api/patrones/cambio").hasAnyRole("USER", "ADMIN")
             .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
             .requestMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")

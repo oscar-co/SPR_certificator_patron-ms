@@ -1,14 +1,14 @@
 package com.certificator.patron_ms.ENUM;
 
 public enum TemperatureUnit {
-    C, K, F;
+    C, F, K;
 
-    public static boolean isValid(String unit) {
+    public static TemperatureUnit fromString(String unit) {
         for (TemperatureUnit u : values()) {
             if (u.name().equalsIgnoreCase(unit)) {
-                return true;
+                return u;
             }
         }
-        return false;
+        throw new IllegalArgumentException("Temperature unit not supported: " + unit);
     }
 }

@@ -61,57 +61,56 @@ public class UnitConversionServiceTest {
 
     @Test
     void testConvert_temperatura_FtoC(){
-        Double result = UnitConversionService.calculoTemperatura("F", 69.8);
+        Double result = UnitConversionService.calculoTemperatura("F", "C", 69.8);
         assertEquals(21, result);
     }
 
     @Test
     void testConvert_temperatura_KtoC(){
-        Double result = UnitConversionService.calculoTemperatura("K", 300.0);
+        Double result = UnitConversionService.calculoTemperatura("K", "C", 300.0);
         assertEquals(26.850000000000023, result);
     }
 
     @Test
     void testConvert_temperatura_CtoC(){
-        Double result = UnitConversionService.calculoTemperatura("C", 38.0);
+        Double result = UnitConversionService.calculoTemperatura("C", "C", 38.0);
         assertEquals(38.0, result);
     }
 
     @Test
     void testConvert_Temperatura_WrongUnit() {
         Exception exception = assertThrows(UnsupportedOperationException.class, () -> {
-            UnitConversionService.calculoTemperatura("Km", 10.0);
+            UnitConversionService.calculoTemperatura("Km", "C", 10.0);
         });
-        assertEquals("Unsupported temperature conversion from Km to C", exception.getMessage());
+        assertEquals("Unsupported temperature conversion from: KM to C", exception.getMessage());
     }
 
     @Test
     void testConvertToReferenceUnit_Presion_mmHg_to_bar() {
-        ConversionResult conversionResult = unitConversionService.convertToReferenceUnit("presion", "psi", 160.0);
+        ConversionResult conversionResult = unitConversionService.convertUnits("presion", "psi", null, 160.0);
         assertEquals(11.031616, conversionResult.getConvertedValue());
     }
 
     @Test
     void testConvertToReferenceUnit_Presion_WrongUnit() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            unitConversionService.convertToReferenceUnit("presion", "Km", 10.0);
+            unitConversionService.convertUnits("presion", "Km", null, 10.0);
         });
         assertEquals("Pressure unit not supported: Km", exception.getMessage());
     }
 
-    // TODO Se queda pendiente hasta insertar los facotrees de cambio de masa al data.sql
-    // @Test
-    // void testConvertToReferenceUnit_Masa_mg_to_g() {
-    //     ConversionResult conversionResult = unitConversionService.convertToReferenceUnit("masa", "mg", 3400.0);
-    //     assertEquals(11.031616, conversionResult.getConvertedValue());
-    // }
+    @Test
+    void testConvertToReferenceUnit_Masa_mg_to_g() {
+        ConversionResult conversionResult = unitConversionService.convertUnits("masa", "mg", "g", 3400.0);
+        assertEquals(3.4, conversionResult.getConvertedValue());
+    }
 
-    // @Test
-    // void testConvertToReferenceUnit_Masa_WrongUnit() {
-    //     Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-    //         unitConversionService.convertToReferenceUnit("masa", "Km", 10.0);
-    //     });
-    //     assertEquals("Mass unit not supported: Km", exception.getMessage());
-    // }
+    @Test
+    void testConvertToReferenceUnit_Masa_WrongUnit() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            unitConversionService.convertUnits("masa", "Km", "g", 10.0);
+        });
+        assertEquals("Mass unit not supported: Km", exception.getMessage());
+    }
 
 }

@@ -17,21 +17,21 @@ public class ChangeUnitsTest {
 
     @Test
     void testConvertToReferenceUnit_Temperatura_FahrenheitToCelsius() {
-        ConversionResult conversionResult = unitConversionService.convertToReferenceUnit("Temperatura", "F", 57.9);
+        ConversionResult conversionResult = unitConversionService.convertUnits("Temperatura", "F", null, 57.9);
         assertEquals("C", conversionResult.getUnit());
         assertEquals(14.38888888888889, conversionResult.getConvertedValue());
     }
 
     @Test
     void testConvertToReferenceUnit_Temperatura_KelvinToCelsius() {
-        ConversionResult conversionResult = unitConversionService.convertToReferenceUnit("Temperatura", "K", 293.15);
+        ConversionResult conversionResult = unitConversionService.convertUnits("Temperatura", "K", null, 293.15);
         assertEquals("C", conversionResult.getUnit());
         assertEquals(20.0, conversionResult.getConvertedValue());
     }
 
     @Test
     void testConvertToReferenceUnit_Temperatura_CelsiusToCelsius() {
-        ConversionResult conversionResult = unitConversionService.convertToReferenceUnit("Temperatura", "C", 37.15);
+        ConversionResult conversionResult = unitConversionService.convertUnits("Temperatura", "C", null, 37.15);
         assertEquals("C", conversionResult.getUnit());
         assertEquals(37.15, conversionResult.getConvertedValue());
     }
@@ -41,7 +41,7 @@ public class ChangeUnitsTest {
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
             () -> {
-                unitConversionService.convertToReferenceUnit("Temperatura", "X", 43d);
+                unitConversionService.convertUnits("Temperatura", "X", null, 43d);
             }
         );
         assertEquals("Temperature unit not supported: X", exception.getMessage());
