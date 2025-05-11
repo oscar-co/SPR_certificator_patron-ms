@@ -13,9 +13,7 @@ import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
 import com.certificator.patron_ms.shared.Exception.CertificateNotFoundException;
 import com.certificator.patron_ms.shared.utils.Utils;
-import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
 
-import jakarta.validation.Valid;
 
 @Service
 public class ConversionFactorService {

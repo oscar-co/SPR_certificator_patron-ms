@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.certificateTests;
+package com.certificator.patron_ms.certificate;
 
 import com.certificator.patron_ms.certificate.Certificate;
 import com.certificator.patron_ms.shared.dto.ApiResponse;

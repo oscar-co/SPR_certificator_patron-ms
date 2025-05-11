@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.certificateTests;
+package com.certificator.patron_ms.utils;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.conversionTests;
+package com.certificator.patron_ms.conversion;
 
 import java.util.Collections;
 import java.util.List;

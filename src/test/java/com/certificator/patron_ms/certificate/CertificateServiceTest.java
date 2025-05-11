@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.certificateTests;
+package com.certificator.patron_ms.certificate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

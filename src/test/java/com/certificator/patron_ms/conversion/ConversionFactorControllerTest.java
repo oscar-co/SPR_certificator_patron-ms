@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.conversionTests;
+package com.certificator.patron_ms.conversion;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
