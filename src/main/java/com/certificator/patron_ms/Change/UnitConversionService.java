@@ -27,8 +27,6 @@ public class UnitConversionService {
         return vEntrada * factor.getFactor();
     }
 
-    //TODO CUANDO EL FRONT hace una conversion de una presion por ejemplo y luego pasas a hacer una de temperatura, falla diciendo que no recooce la unidad C de Celsisus
-
     public static Double calculoTemperatura(String iUnit, String oUnit, Double eValue) {
         iUnit = iUnit.toUpperCase();
         oUnit = oUnit.toUpperCase();
@@ -69,14 +67,14 @@ public class UnitConversionService {
         MagnitudeType magnitudeType = MagnitudeType.fromString(magnitud);
         ConversionResult result = new ConversionResult();
     
-        // Si no se especifica unidad de salida, usamos la de referencia
+        // Si no se especifica unidad de salida, utilizo la de referencia
         if (outputUnit == null || outputUnit.isBlank()) {
-            outputUnit = Utils.getDefaultReferenceUnit(magnitudeType); // e.g. "C", "bar", "g"
+            outputUnit = Utils.getDefaultReferenceUnit(magnitudeType);
         }
     
         switch (magnitudeType) {
             case TEMPERATURA:
-                TemperatureUnit.fromString(inputUnit); // valida y lanza si no es válido
+                TemperatureUnit.fromString(inputUnit);
                 TemperatureUnit.fromString(outputUnit);
 
                 result.setUnit(outputUnit);
@@ -84,7 +82,7 @@ public class UnitConversionService {
                 break;
     
             case PRESION:
-                PressureUnit.fromString(inputUnit); // valida y lanza si no es válido
+                PressureUnit.fromString(inputUnit);
                 PressureUnit.fromString(outputUnit);
 
                 result.setUnit(outputUnit);
@@ -92,7 +90,7 @@ public class UnitConversionService {
                 break;
 
             case MASA:
-                MassUnit.fromString(inputUnit); // valida y lanza si no es válido
+                MassUnit.fromString(inputUnit);
                 MassUnit.fromString(outputUnit);
 
                 result.setUnit(outputUnit);
@@ -100,7 +98,7 @@ public class UnitConversionService {
                 break;
 
             case LONGITUD:
-                LongitudeUnit.fromString(inputUnit); // valida y lanza si no es válido
+                LongitudeUnit.fromString(inputUnit);
                 LongitudeUnit.fromString(outputUnit);
 
                 result.setUnit(outputUnit);
@@ -108,21 +106,17 @@ public class UnitConversionService {
                 break;
 
             case AREA:
-                AreaUnit.fromString(inputUnit); // valida y lanza si no es válido
+                AreaUnit.fromString(inputUnit);
                 AreaUnit.fromString(outputUnit);
-                
+
                 result.setUnit(outputUnit);
                 result.setConvertedValue(calculoMagnitudes(inputUnit, outputUnit, value));
                 break;
     
-            // case MASA, etc.
-    
             default:
                 throw new IllegalArgumentException("Magnitud no soportada: " + magnitud);
         }
-    
         result.setOriginalValue(originalValue);
         return result;
     }
-    
 }

@@ -1,7 +1,5 @@
 package com.certificator.patron_ms.utils;
 
-import java.util.List;
-
 import com.certificator.patron_ms.Certificate.Certificate;
 import com.certificator.patron_ms.Change.Change;
 import com.certificator.patron_ms.Change.ConversionResult;

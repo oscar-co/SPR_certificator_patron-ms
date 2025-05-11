@@ -28,10 +28,8 @@ public interface CertificateRepository extends JpaRepository<Certificate, Long> 
     );
 
 
-
     @Query("SELECT c.insType FROM Certificate c WHERE c.nameIdentify = :nameIdentify")
     String findMagnitudByNameIdentify(@Param("nameIdentify") String nameIdentify);
-
 
 
     @Query(value = """

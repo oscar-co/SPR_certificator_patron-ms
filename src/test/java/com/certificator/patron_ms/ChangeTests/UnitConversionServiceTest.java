@@ -17,7 +17,6 @@ public class UnitConversionServiceTest {
     @Autowired
     private UnitConversionService unitConversionService;
 
-
     @Test
     void testConvert_Presion_Pa_to_mbar() {
 
@@ -55,7 +54,6 @@ public class UnitConversionServiceTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             unitConversionService.calculoMagnitudes("Km", "Pa", 1.0);
         });
-
         assertEquals("Factor no encontrado para Km → Pa", exception.getMessage());
     }
 
@@ -112,5 +110,4 @@ public class UnitConversionServiceTest {
         });
         assertEquals("Mass unit not supported: Km", exception.getMessage());
     }
-
 }
