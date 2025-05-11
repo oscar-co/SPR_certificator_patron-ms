@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Exception;
+package com.certificator.patron_ms.shared.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;

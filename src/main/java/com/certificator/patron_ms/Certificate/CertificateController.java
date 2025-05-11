@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Certificate;
+package com.certificator.patron_ms.certificate;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.certificator.patron_ms.conversion.dto.ApiResponse;
+import com.certificator.patron_ms.shared.dto.ApiResponse;
 
 import jakarta.validation.Valid;
 

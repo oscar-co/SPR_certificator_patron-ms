@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.ChangeTests;
+package com.certificator.patron_ms.conversionTests;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,20 +14,19 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.certificator.patron_ms.Certificate.Certificate;
-import com.certificator.patron_ms.Certificate.CertificateRepository;
-import com.certificator.patron_ms.Exception.CertificateNotFoundException;
+import com.certificator.patron_ms.certificate.Certificate;
+import com.certificator.patron_ms.certificate.CertificateRepository;
 import com.certificator.patron_ms.conversion.ConversionFactorService;
 import com.certificator.patron_ms.conversion.UnitConversionService;
 import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
-import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
+import com.certificator.patron_ms.shared.Exception.CertificateNotFoundException;
 import com.certificator.patron_ms.utils.TestDataFactory;
 
 @ExtendWith(MockitoExtension.class)
-public class ChangeServiceTest {
+public class ConversionFactorServiceTest {
 
     @Mock CertificateRepository certificateRepository;
     @Mock UnitConversionService unitConversionService;

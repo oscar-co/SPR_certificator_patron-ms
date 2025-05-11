@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Certificate;
+package com.certificator.patron_ms.certificate;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.certificator.patron_ms.Exception.CertificateNotFoundException;
+import com.certificator.patron_ms.shared.Exception.CertificateNotFoundException;
 
 @Service
 public class CertificateService {

@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.ENUM;
+package com.certificator.patron_ms.shared.enums;
 
 public enum TemperatureUnit {
     C, F, K;

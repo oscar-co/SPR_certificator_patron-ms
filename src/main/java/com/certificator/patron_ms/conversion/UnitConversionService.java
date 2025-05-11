@@ -2,14 +2,14 @@ package com.certificator.patron_ms.conversion;
 
 import org.springframework.stereotype.Service;
 
-import com.certificator.patron_ms.ENUM.AreaUnit;
-import com.certificator.patron_ms.ENUM.LongitudeUnit;
-import com.certificator.patron_ms.ENUM.MagnitudeType;
-import com.certificator.patron_ms.ENUM.MassUnit;
-import com.certificator.patron_ms.ENUM.PressureUnit;
-import com.certificator.patron_ms.ENUM.TemperatureUnit;
 import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
-import com.certificator.patron_ms.utils.Utils;
+import com.certificator.patron_ms.shared.enums.AreaUnit;
+import com.certificator.patron_ms.shared.enums.LongitudeUnit;
+import com.certificator.patron_ms.shared.enums.MagnitudeType;
+import com.certificator.patron_ms.shared.enums.MassUnit;
+import com.certificator.patron_ms.shared.enums.PressureUnit;
+import com.certificator.patron_ms.shared.enums.TemperatureUnit;
+import com.certificator.patron_ms.shared.utils.Utils;
 
 @Service
 public class UnitConversionService {

@@ -1,7 +1,7 @@
 package com.certificator.patron_ms.utils;
 
-import com.certificator.patron_ms.Certificate.Certificate;
 import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
+import com.certificator.patron_ms.certificate.Certificate;
 import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;

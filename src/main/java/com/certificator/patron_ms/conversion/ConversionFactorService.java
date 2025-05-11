@@ -5,15 +5,15 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.certificator.patron_ms.Certificate.Certificate;
-import com.certificator.patron_ms.Certificate.CertificateRepository;
-import com.certificator.patron_ms.Exception.CertificateNotFoundException;
+import com.certificator.patron_ms.certificate.Certificate;
+import com.certificator.patron_ms.certificate.CertificateRepository;
 import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
+import com.certificator.patron_ms.shared.Exception.CertificateNotFoundException;
+import com.certificator.patron_ms.shared.utils.Utils;
 import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
-import com.certificator.patron_ms.utils.Utils;
 
 import jakarta.validation.Valid;
 

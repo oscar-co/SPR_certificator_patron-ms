@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.CertificateTests;
+package com.certificator.patron_ms.certificateTests;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -25,10 +25,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-import com.certificator.patron_ms.Certificate.Certificate;
-import com.certificator.patron_ms.Certificate.CertificateController;
-import com.certificator.patron_ms.Certificate.CertificateService;
-import com.certificator.patron_ms.Config.security.SecurityConfig;
+import com.certificator.patron_ms.certificate.Certificate;
+import com.certificator.patron_ms.certificate.CertificateController;
+import com.certificator.patron_ms.certificate.CertificateService;
+import com.certificator.patron_ms.config.security.SecurityConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 

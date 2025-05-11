@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Exception;
+package com.certificator.patron_ms.shared.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.certificator.patron_ms.conversion.dto.ApiResponse;
+import com.certificator.patron_ms.shared.dto.ApiResponse;
 
 
 @ControllerAdvice

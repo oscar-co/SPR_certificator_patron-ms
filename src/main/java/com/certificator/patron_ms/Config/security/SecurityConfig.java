@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Config.security;
+package com.certificator.patron_ms.config.security;
 
 import java.util.List;
 

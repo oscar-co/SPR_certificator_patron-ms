@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.ChangeTests;
+package com.certificator.patron_ms.conversionTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

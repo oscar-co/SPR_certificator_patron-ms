@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.ChangeTests;
+package com.certificator.patron_ms.conversionTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,7 +10,7 @@ import com.certificator.patron_ms.conversion.UnitConversionService;
 import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 
 @SpringBootTest
-public class ChangeUnitsTest {
+public class ConversionFactorUnitsTest {
 
     @Autowired
     private UnitConversionService unitConversionService;

@@ -1,10 +1,10 @@
-package com.certificator.patron_ms.CertificateTests;
+package com.certificator.patron_ms.certificateTests;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.certificator.patron_ms.Certificate.Certificate;
-import com.certificator.patron_ms.utils.CertificateValidator;
+import com.certificator.patron_ms.certificate.Certificate;
+import com.certificator.patron_ms.shared.utils.CertificateValidator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

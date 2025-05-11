@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.CertificateTests;
+package com.certificator.patron_ms.certificateTests;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.certificator.patron_ms.Certificate.CertificateRepository;
+import com.certificator.patron_ms.certificate.CertificateRepository;
 
 @SpringBootTest
 public class CertificateRepositoryTest {

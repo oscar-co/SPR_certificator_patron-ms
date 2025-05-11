@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Certificate;
+package com.certificator.patron_ms.certificate;
 
 import java.math.BigDecimal;
 
@@ -25,7 +25,6 @@ public class Measurement {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -33,7 +32,6 @@ public class Measurement {
     public String getCertId() {
         return certId;
     }
-
     public void setCertId(String certId) {
         this.certId = certId;
     }
@@ -41,7 +39,6 @@ public class Measurement {
     public BigDecimal getReference() {
         return reference;
     }
-
     public void setReference(BigDecimal reference) {
         this.reference = reference;
     }
@@ -49,7 +46,6 @@ public class Measurement {
     public BigDecimal getInstrumentReading() {
         return instrumentReading;
     }
-
     public void setInstrumentReading(BigDecimal instrumentReading) {
         this.instrumentReading = instrumentReading;
     }
@@ -57,7 +53,6 @@ public class Measurement {
     public BigDecimal getCorrection() {
         return correction;
     }
-
     public void setCorrection(BigDecimal correction) {
         this.correction = correction;
     }
@@ -65,7 +60,6 @@ public class Measurement {
     public BigDecimal getUncertainty() {
         return uncertainty;
     }
-
     public void setUncertainty(BigDecimal uncertainty) {
         this.uncertainty = uncertainty;
     }
@@ -73,9 +67,7 @@ public class Measurement {
     public BigDecimal getAmbientTemp() {
         return ambientTemp;
     }
-
     public void setAmbientTemp(BigDecimal ambientTemp) {
         this.ambientTemp = ambientTemp;
     }
-
 }

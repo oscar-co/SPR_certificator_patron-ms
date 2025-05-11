@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.ENUM;
+package com.certificator.patron_ms.shared.enums;
 
 public enum AreaUnit {
     M2, KM2, MM2, HE, FT2, MI2, HA;

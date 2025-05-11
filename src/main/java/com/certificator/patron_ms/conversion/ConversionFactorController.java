@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.certificator.patron_ms.Certificate.Certificate;
-import com.certificator.patron_ms.conversion.dto.ApiResponse;
 import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
+import com.certificator.patron_ms.certificate.Certificate;
 import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
 import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
+import com.certificator.patron_ms.shared.dto.ApiResponse;
 
 import jakarta.validation.Valid;
 

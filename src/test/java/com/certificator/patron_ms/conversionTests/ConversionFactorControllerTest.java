@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.ChangeTests;
+package com.certificator.patron_ms.conversionTests;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -20,20 +20,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static com.certificator.patron_ms.utils.TestUtils.readJsonFromFile;
 
-import com.certificator.patron_ms.Certificate.Certificate;
-import com.certificator.patron_ms.Config.security.SecurityConfig;
+import com.certificator.patron_ms.certificate.Certificate;
+import com.certificator.patron_ms.config.security.SecurityConfig;
 import com.certificator.patron_ms.conversion.ConversionFactorController;
 import com.certificator.patron_ms.conversion.ConversionFactorService;
 import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
-import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
 import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @WebMvcTest(ConversionFactorController.class)
 @Import(SecurityConfig.class)
-public class ChangeControllerTest {
+public class ConversionFactorControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

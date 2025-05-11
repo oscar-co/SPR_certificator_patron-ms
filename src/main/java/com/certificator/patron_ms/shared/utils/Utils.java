@@ -1,10 +1,11 @@
-package com.certificator.patron_ms.utils;
+package com.certificator.patron_ms.shared.utils;
 
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import com.certificator.patron_ms.ENUM.MagnitudeType;
+import com.certificator.patron_ms.shared.enums.MagnitudeType;
+
 
 public class Utils {
 

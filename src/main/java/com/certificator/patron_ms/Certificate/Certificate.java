@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Certificate;
+package com.certificator.patron_ms.certificate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

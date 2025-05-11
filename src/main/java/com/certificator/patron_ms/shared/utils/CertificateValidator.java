@@ -1,10 +1,10 @@
-package com.certificator.patron_ms.utils;
+package com.certificator.patron_ms.shared.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.certificator.patron_ms.Certificate.Certificate;
+import com.certificator.patron_ms.certificate.Certificate;
 
 @Component
 public class CertificateValidator {
