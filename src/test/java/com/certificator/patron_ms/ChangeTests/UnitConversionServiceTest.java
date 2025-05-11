@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.certificator.patron_ms.Change.ConversionResult;
-import com.certificator.patron_ms.Change.UnitConversionService;
+import com.certificator.patron_ms.conversion.UnitConversionService;
+import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 
 
 @SpringBootTest
@@ -85,7 +85,7 @@ public class UnitConversionServiceTest {
 
     @Test
     void testConvertToReferenceUnit_Presion_mmHg_to_bar() {
-        ConversionResult conversionResult = unitConversionService.convertUnits("presion", "psi", null, 160.0);
+        ConversionResultDTO conversionResult = unitConversionService.convertUnits("presion", "psi", null, 160.0);
         assertEquals(11.031616, conversionResult.getConvertedValue());
     }
 
@@ -99,7 +99,7 @@ public class UnitConversionServiceTest {
 
     @Test
     void testConvertToReferenceUnit_Masa_mg_to_g() {
-        ConversionResult conversionResult = unitConversionService.convertUnits("masa", "mg", "g", 3400.0);
+        ConversionResultDTO conversionResult = unitConversionService.convertUnits("masa", "mg", "g", 3400.0);
         assertEquals(3.4, conversionResult.getConvertedValue());
     }
 

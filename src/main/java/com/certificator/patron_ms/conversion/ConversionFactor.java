@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Change;
+package com.certificator.patron_ms.conversion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

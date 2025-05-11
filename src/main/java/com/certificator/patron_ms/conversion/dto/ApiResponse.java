@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.DTO;
+package com.certificator.patron_ms.conversion.dto;
 
 import java.time.Instant;
 

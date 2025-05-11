@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Change;
+package com.certificator.patron_ms.conversion;
 
 import java.util.List;
 
@@ -12,24 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.certificator.patron_ms.Certificate.Certificate;
-import com.certificator.patron_ms.DTO.ApiResponse;
-import com.certificator.patron_ms.DTO.ChangeRequestDTO;
-import com.certificator.patron_ms.DTO.ChangeResponseDTO;
-import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
+import com.certificator.patron_ms.conversion.dto.ApiResponse;
+import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
+import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
+import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
 
 import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping("/api/patrones")
-public class ChangeController {
+public class ConversionFactorController {
 
     @Autowired
-    private ChangeService changeService;
+    private ConversionFactorService changeService;
 
     @PostMapping("/patrones-disponibles")
-    public ResponseEntity<ApiResponse<List<Certificate>>> getPatronAvailable(@Valid @RequestBody Change change){
-
+    public ResponseEntity<ApiResponse<List<Certificate>>> getPatronAvailable(@Valid @RequestBody ConversionResponseDTO change){
         List<Certificate> result = changeService.getPatronesByMeasure(change); 
         return ResponseEntity.ok(
             new ApiResponse<>(
@@ -41,7 +40,6 @@ public class ChangeController {
 
     @PostMapping("/incertidumbre-patron")
     public ResponseEntity<ApiResponse<Double>> getUncertaintyByPtn(@Valid  @RequestBody UncertaintyByPtnDTO request){
-
         Double value = changeService.getUncertaintyByPtnS(request);
         return ResponseEntity.ok(
             new ApiResponse<>(
@@ -63,9 +61,8 @@ public class ChangeController {
     }
 
     @PostMapping("/cambio")
-    public ResponseEntity<ApiResponse<ChangeResponseDTO>> getChangeByUnitsAndValue(@Valid @RequestBody ChangeRequestDTO request) throws Exception {
-
-        ChangeResponseDTO response = changeService.convert(request);
+    public ResponseEntity<ApiResponse<ConversionResponseDTO>> getChangeByUnitsAndValue(@Valid @RequestBody ConversionRequestDTO request) throws Exception {
+        ConversionResponseDTO response = changeService.convert(request);
         return ResponseEntity.ok(
             new ApiResponse<>(
                 "success",

@@ -21,17 +21,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static com.certificator.patron_ms.utils.TestUtils.readJsonFromFile;
 
 import com.certificator.patron_ms.Certificate.Certificate;
-import com.certificator.patron_ms.Change.Change;
-import com.certificator.patron_ms.Change.ChangeController;
-import com.certificator.patron_ms.Change.ChangeService;
 import com.certificator.patron_ms.Config.security.SecurityConfig;
-import com.certificator.patron_ms.DTO.ChangeRequestDTO;
-import com.certificator.patron_ms.DTO.ChangeResponseDTO;
-import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
+import com.certificator.patron_ms.conversion.ConversionFactorController;
+import com.certificator.patron_ms.conversion.ConversionFactorService;
+import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
+import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
+import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
+import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-@WebMvcTest(ChangeController.class)
+@WebMvcTest(ConversionFactorController.class)
 @Import(SecurityConfig.class)
 public class ChangeControllerTest {
 
@@ -39,7 +39,7 @@ public class ChangeControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ChangeService changeService;
+    private ConversionFactorService changeService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -57,7 +57,7 @@ public class ChangeControllerTest {
         String json = readJsonFromFile("test-data/certificate-with-measurements.json");
         Certificate cert = objectMapper.readValue(json, Certificate.class);
 
-        when(changeService.getPatronesByMeasure(any(Change.class))).thenReturn(List.of(cert));
+        when(changeService.getPatronesByMeasure(any(ConversionResponseDTO.class))).thenReturn(List.of(cert));
 
         mockMvc.perform(post("/api/patrones/patrones-disponibles")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -82,10 +82,10 @@ public class ChangeControllerTest {
     @WithMockUser(username = "user", roles = {"USER"})
     void getChangeByUnitsAndValue_returnsConversionResult() throws Exception {
 
-        ChangeRequestDTO requestDto = new ChangeRequestDTO("presion", "bar", "mbar", 34.0);
-        ChangeResponseDTO responseDto = new ChangeResponseDTO(34.0, 34000.0, "bar", "mbar", "presion");
+        ConversionRequestDTO requestDto = new ConversionRequestDTO("presion", "bar", "mbar", 34.0);
+        ConversionResponseDTO responseDto = new ConversionResponseDTO("presion", "bar", "mbar", 34.0, 34000.0 );
 
-        when(changeService.convert(any(ChangeRequestDTO.class))).thenReturn(responseDto);
+        when(changeService.convert(any(ConversionRequestDTO.class))).thenReturn(responseDto);
 
         // Act & Assert: realiza el POST y valida respuesta
         mockMvc.perform(post("/api/patrones/cambio")
@@ -104,9 +104,9 @@ public class ChangeControllerTest {
     @WithMockUser(username = "user", roles = {"USER"})
     void convert_shouldReturnError_whenFactorNotFound() throws Exception {
 
-        ChangeRequestDTO requestDto = new ChangeRequestDTO("presion", "bar", "mbar", 346767.0);
+        ConversionRequestDTO requestDto = new ConversionRequestDTO("presion", "bar", "mbar", 346767.0);
 
-        when(changeService.convert(any(ChangeRequestDTO.class)))
+        when(changeService.convert(any(ConversionRequestDTO.class)))
             .thenThrow(new RuntimeException("No se encontró factor de conversión"));
 
         // Act & Assert: esperamos un 500 del servidor por la excepción lanzada

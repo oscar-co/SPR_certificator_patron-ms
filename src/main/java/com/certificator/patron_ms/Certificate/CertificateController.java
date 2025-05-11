@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.certificator.patron_ms.DTO.ApiResponse;
+import com.certificator.patron_ms.conversion.dto.ApiResponse;
 
 import jakarta.validation.Valid;
 

@@ -16,14 +16,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.certificator.patron_ms.Certificate.Certificate;
 import com.certificator.patron_ms.Certificate.CertificateRepository;
-import com.certificator.patron_ms.Change.Change;
-import com.certificator.patron_ms.Change.ChangeService;
-import com.certificator.patron_ms.Change.ConversionResult;
-import com.certificator.patron_ms.Change.UnitConversionService;
-import com.certificator.patron_ms.DTO.ChangeRequestDTO;
-import com.certificator.patron_ms.DTO.ChangeResponseDTO;
-import com.certificator.patron_ms.DTO.UncertaintyByPtnDTO;
 import com.certificator.patron_ms.Exception.CertificateNotFoundException;
+import com.certificator.patron_ms.conversion.ConversionFactorService;
+import com.certificator.patron_ms.conversion.UnitConversionService;
+import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
+import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
+import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
+import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
+import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
 import com.certificator.patron_ms.utils.TestDataFactory;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,12 +31,12 @@ public class ChangeServiceTest {
 
     @Mock CertificateRepository certificateRepository;
     @Mock UnitConversionService unitConversionService;
-    @InjectMocks ChangeService changeService;
+    @InjectMocks ConversionFactorService changeService;
 
     @Test
     void testGetPatronesByMeasure_returnsMatchingCertificates() {
-        Change request = TestDataFactory.buildChangeRequest("temperatura", "C", 50.0);
-        ConversionResult conversion = TestDataFactory.buildConversionResult(50.0);
+        ConversionResponseDTO request = TestDataFactory.buildChangeRequest("temperatura", "C", 50.0);
+        ConversionResultDTO conversion = TestDataFactory.buildConversionResult(50.0);
         Certificate dummyCert = TestDataFactory.buildCertificate("CERT-001");
 
         when(unitConversionService.convertUnits("Temperatura", "C", null, 50.0)).thenReturn(conversion);
@@ -51,8 +51,8 @@ public class ChangeServiceTest {
 
     @Test
     void testGetPatronesByMeasure_whenNoResults_returnsEmptyList() {
-        Change request = TestDataFactory.buildChangeRequest("Presion", "bar", 1501.0);
-        ConversionResult conversion = TestDataFactory.buildConversionResult(101.0);
+        ConversionResponseDTO request = TestDataFactory.buildChangeRequest("Presion", "bar", 1501.0);
+        ConversionResultDTO conversion = TestDataFactory.buildConversionResult(101.0);
 
         when(unitConversionService.convertUnits("Presion", "bar", null, 1501.0)).thenReturn(conversion);
         when(certificateRepository.findMatchingCertificates("Presion", 101.0)).thenReturn(Collections.emptyList());
@@ -89,12 +89,12 @@ public class ChangeServiceTest {
 
     @Test
     void convert_ShouldReturnValidResponse_WhenConversionIsSuccessful() throws Exception {
-        ChangeRequestDTO dto = TestDataFactory.buildValidChangeRequest();
-        ConversionResult result = TestDataFactory.buildConversionResult(34000.0);
+        ConversionRequestDTO dto = TestDataFactory.buildValidChangeRequest();
+        ConversionResultDTO result = TestDataFactory.buildConversionResult(34000.0);
 
         when(unitConversionService.convertUnits("presion", "bar", "mbar", 34.0)).thenReturn(result);
 
-        ChangeResponseDTO response = changeService.convert(dto);
+        ConversionResponseDTO response = changeService.convert(dto);
 
         assertEquals(34.0, response.getInputValue());
         assertEquals(34000.0, response.getOutputValue());

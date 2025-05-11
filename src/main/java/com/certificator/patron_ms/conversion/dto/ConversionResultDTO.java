@@ -1,19 +1,19 @@
-package com.certificator.patron_ms.Change;
+package com.certificator.patron_ms.conversion.dto;
 
 
-public class ConversionResult {
+public class ConversionResultDTO {
     
     private Double originalValue;
     private Double convertedValue;
     private String unit;
 
-    public ConversionResult(Double convertedValue, Double originalValue, String unit) {
+    public ConversionResultDTO(Double convertedValue, Double originalValue, String unit) {
         this.convertedValue = convertedValue;
         this.originalValue = originalValue;
         this.unit = unit;
     }
 
-    public ConversionResult() {
+    public ConversionResultDTO() {
     }
 
     public Double getOriginalValue() {

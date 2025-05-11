@@ -1,4 +1,4 @@
-package com.certificator.patron_ms.Change;
+package com.certificator.patron_ms.conversion;
 
 import org.springframework.stereotype.Service;
 
@@ -8,6 +8,7 @@ import com.certificator.patron_ms.ENUM.MagnitudeType;
 import com.certificator.patron_ms.ENUM.MassUnit;
 import com.certificator.patron_ms.ENUM.PressureUnit;
 import com.certificator.patron_ms.ENUM.TemperatureUnit;
+import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 import com.certificator.patron_ms.utils.Utils;
 
 @Service
@@ -62,10 +63,21 @@ public class UnitConversionService {
         }
     }
 
-    public ConversionResult convertUnits(String magnitud, String inputUnit, String outputUnit, Double value) {
+    /**
+     * Convierte una magnitud de una unidad a otra.
+     *
+     * @param magnitud   La magnitud a convertir (temperatura, presión, masa, longitud, área).
+     * @param inputUnit  La unidad de entrada.
+     * @param outputUnit La unidad de salida.
+     * @param value      El valor a convertir.
+     * @return Un objeto ConversionResultDTO con el valor convertido y la unidad de salida.
+     */
+    public ConversionResultDTO convertUnits(String magnitud, String inputUnit, String outputUnit, Double value) {
+
+
         Double originalValue = value;
         MagnitudeType magnitudeType = MagnitudeType.fromString(magnitud);
-        ConversionResult result = new ConversionResult();
+        ConversionResultDTO result = new ConversionResultDTO();
     
         // Si no se especifica unidad de salida, utilizo la de referencia
         if (outputUnit == null || outputUnit.isBlank()) {
