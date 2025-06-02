@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS conversion_factor (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id BIGSERIAL PRIMARY KEY,
     u_entrada VARCHAR(50) NOT NULL,
     u_salida VARCHAR(50) NOT NULL,
-    factor DOUBLE NOT NULL
+    factor DOUBLE PRECISION NOT NULL
 );
+
 ALTER TABLE conversion_factor ADD COLUMN IF NOT EXISTS magnitud VARCHAR(50);

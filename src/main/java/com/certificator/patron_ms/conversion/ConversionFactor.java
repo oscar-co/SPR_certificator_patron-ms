@@ -32,6 +32,9 @@ public class ConversionFactor {
     private double factor;
 
     // Getters y setters
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id = id;}
+    
     public String getMagnitud() { return magnitud; }
     public void setMagnitud(String magnitud) { this.magnitud = magnitud; }
 
