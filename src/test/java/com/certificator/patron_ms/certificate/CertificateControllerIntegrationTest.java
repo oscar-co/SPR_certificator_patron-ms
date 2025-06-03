@@ -1,12 +1,13 @@
 package com.certificator.patron_ms.certificate;
 
-import com.certificator.patron_ms.certificate.Certificate;
 import com.certificator.patron_ms.shared.dto.ApiResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -20,6 +21,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Usamos @TestInstance(TestInstance.Lifecycle.PER_CLASS) para permitir que los métodos @AfterAll y @BeforeAll
+// sean no estáticos (non-static). Esto es útil cuando necesitamos acceder a propiedades de instancia,
+// como beans inyectados con @Autowired, dentro de esos métodos.
+// Por defecto, JUnit 5 requiere que @AfterAll/@BeforeAll sean static, pero este ajuste cambia el ciclo de vida
+// para que JUnit reutilice la misma instancia de clase en todos los tests.
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CertificateControllerIntegrationTest {
 
@@ -28,6 +35,9 @@ public class CertificateControllerIntegrationTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private CertificateRepository certificateRepository;
 
     private String readJson(String path) throws IOException {
         ClassPathResource resource = new ClassPathResource(path);
@@ -43,6 +53,11 @@ public class CertificateControllerIntegrationTest {
     }
 
     private Long insertedCertId;
+
+    @AfterAll
+    void cleanup() {
+        certificateRepository.deleteAll();
+    }
 
     @BeforeEach
     void setup() throws IOException {
@@ -101,6 +116,7 @@ public class CertificateControllerIntegrationTest {
         );
         List<Certificate> certList = apiResponse.getData();
 
+        assertNotNull(apiResponse.getData(), "La lista de certificados es null");
         assertNotNull(certList);
         assertTrue(certList.size() >= 3);
 }
