@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,35 +26,39 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-        .csrf(csrf -> csrf.disable())
-        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .headers(headers -> headers.frameOptions(frame -> frame.disable()))        
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/public/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/**").hasAnyRole("USER", "ADMIN")
-            .requestMatchers(HttpMethod.POST, "/api/patrones/patrones-disponibles").hasAnyRole("USER", "ADMIN")
-            .requestMatchers(HttpMethod.POST, "/api/patrones/incertidumbre-patron").hasAnyRole("USER", "ADMIN")
-            .requestMatchers(HttpMethod.POST, "/api/patrones/cambio").hasAnyRole("USER", "ADMIN")
-            .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
-            .requestMatchers("/h2-console/**").permitAll()
-            .anyRequest().authenticated()
-        )
-        .httpBasic(Customizer.withDefaults());
+    public JwtAuthenticationFilter jwtAuthenticationFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+        return new JwtAuthenticationFilter(jwtUtil, userDetailsService);
+    }
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/patrones/patrones-disponibles").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/patrones/incertidumbre-patron").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/patrones/cambio").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // origen del frontend Angular
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true); // importante si usas Basic Auth
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -64,13 +70,13 @@ public class SecurityConfig {
         UserDetails user = User.builder()
             .username("user")
             .password(passwordEncoder.encode("user123"))
-            .roles("USER")  // Rol USER
+            .roles("USER")
             .build();
 
         UserDetails admin = User.builder()
             .username("admin")
             .password(passwordEncoder.encode("admin123"))
-            .roles("ADMIN") // Rol ADMIN
+            .roles("ADMIN")
             .build();
 
         return new InMemoryUserDetailsManager(user, admin);
@@ -79,5 +85,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 }

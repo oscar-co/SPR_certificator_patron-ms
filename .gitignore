@@ -11,10 +11,13 @@ target/
 .factorypath
 .project
 .settings
-.springBeans
+.springBea
 .sts4-cache
 
 ### VS Code ###
 .vscode/
 
 logs/
+
+
+.DS_Store
