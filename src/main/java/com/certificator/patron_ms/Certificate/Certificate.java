@@ -11,7 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-
+import jakarta.persistence.OrderBy;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -42,6 +42,7 @@ public class Certificate {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "certificate_id")
+    @OrderBy("instrumentReading ASC")
     private List<Measurement> measurements = new ArrayList<>();
 
     
