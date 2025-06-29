@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import com.certificator.patron_ms.shared.dto.ApiResponse;
+
 import java.util.Map;
 
 @RestController
@@ -43,7 +45,13 @@ public class AuthController {
 
             return ResponseEntity.ok(Map.of("token", token));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(
+                new ApiResponse<>(
+                    "error", 
+                    "Credenciales inválidas", 
+                    null )
+            );    
         }
     }
 }
