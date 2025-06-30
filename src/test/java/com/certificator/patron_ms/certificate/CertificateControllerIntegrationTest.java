@@ -3,19 +3,17 @@ package com.certificator.patron_ms.certificate;
 import com.certificator.patron_ms.shared.dto.ApiResponse;
 import com.certificator.patron_ms.user.User;
 import com.certificator.patron_ms.user.UserRepository;
+import com.certificator.patron_ms.utils.TestUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,24 +22,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CertificateControllerIntegrationTest {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private CertificateRepository certificateRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Autowired private TestRestTemplate restTemplate;
+    @Autowired private ObjectMapper objectMapper;
+    @Autowired private CertificateRepository certificateRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private TestUtils testUtils;
 
     private Long insertedCertId;
-    private String adminToken;
-    private String userToken;
 
     @AfterEach
     void deleteUsers(){
@@ -53,11 +41,9 @@ public class CertificateControllerIntegrationTest {
     void setup() throws IOException {
 
         String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
-        String json = readJson("test-data/certificate-with-measurements.json");
+        String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(adminToken);
+        HttpHeaders headers = testUtils.buildHeaders(adminToken);
         HttpEntity<String> request = new HttpEntity<>(json, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
@@ -76,21 +62,14 @@ public class CertificateControllerIntegrationTest {
         certificateRepository.deleteAll();   
     }
 
-    private String readJson(String path) throws IOException {
-        ClassPathResource resource = new ClassPathResource(path);
-        return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
-    }
-
     @Test
     void createCertificate_asUser_shouldReturnForbidden() throws Exception {
 
         String userToken = registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
 
-        String json = readJson("test-data/certificate-with-measurements.json");
+        String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(userToken);
+        HttpHeaders headers = testUtils.buildHeaders(userToken);
         HttpEntity<String> request = new HttpEntity<>(json, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones", request, String.class);
@@ -138,10 +117,8 @@ public class CertificateControllerIntegrationTest {
         String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
 
         // Crear certificado
-        String json = readJson("test-data/certificate-with-measurements.json");
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(adminToken);
+        String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
+        HttpHeaders headers = testUtils.buildHeaders(adminToken);
         HttpEntity<String> request = new HttpEntity<>(json, headers);
 
         ResponseEntity<String> createResponse = restTemplate.postForEntity("/api/patrones", request, String.class);
@@ -165,11 +142,8 @@ public class CertificateControllerIntegrationTest {
         // Crear admin y obtener token
         String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
 
-        // Crear certificado con admin
-        String json = readJson("test-data/certificate-with-measurements.json");
-        HttpHeaders adminHeaders = new HttpHeaders();
-        adminHeaders.setContentType(MediaType.APPLICATION_JSON);
-        adminHeaders.setBearerAuth(adminToken);
+        String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
+        HttpHeaders adminHeaders = testUtils.buildHeaders(adminToken);
         HttpEntity<String> adminRequest = new HttpEntity<>(json, adminHeaders);
 
         ResponseEntity<String> createResponse = restTemplate.postForEntity("/api/patrones", adminRequest, String.class);
@@ -179,10 +153,8 @@ public class CertificateControllerIntegrationTest {
             objectMapper.readValue(createResponse.getBody(), new TypeReference<>() {});
         Long certId = responseObj.getData().getId();
 
-        // Crear usuario normal
         String userToken = registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
 
-        // Intentar eliminar con usuario
         HttpHeaders userHeaders = new HttpHeaders();
         userHeaders.setBearerAuth(userToken);
         HttpEntity<Void> userRequest = new HttpEntity<>(userHeaders);
@@ -207,7 +179,7 @@ public class CertificateControllerIntegrationTest {
 
         User user = new User();
         user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password)); // Solo aquí se codifica
+        user.setPassword(passwordEncoder.encode(password));
         user.setEmail(email);
         user.setRole(role);
 
@@ -238,4 +210,51 @@ public class CertificateControllerIntegrationTest {
 
         return (String) response.getBody().get("token");
     }
+
+    @Test
+    void updateCertificate_shouldUpdateCorrectly() throws Exception {
+        String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
+
+        // Crear certificado
+        String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(adminToken);
+        HttpEntity<String> request = new HttpEntity<>(json, headers);
+        ResponseEntity<String> createResponse = restTemplate.postForEntity("/api/patrones", request, String.class);
+        Long certId = objectMapper.readValue(createResponse.getBody(), new TypeReference<ApiResponse<Certificate>>() {}).getData().getId();
+
+        // Modificar nombre
+        Certificate updatedCert = objectMapper.readValue(json, Certificate.class);
+        updatedCert.setNameIdentify("UPDATED-PTN");
+        String updatedJson = objectMapper.writeValueAsString(updatedCert);
+        HttpEntity<String> updateRequest = new HttpEntity<>(updatedJson, headers);
+
+        ResponseEntity<String> updateResponse = restTemplate.exchange(
+            "/api/patrones/" + certId, HttpMethod.PUT, updateRequest, String.class);
+
+        assertEquals(HttpStatus.OK, updateResponse.getStatusCode());
+        assertTrue(updateResponse.getBody().contains("UPDATED-PTN"));
+
+        deleteTestUser("adminTest");
+    }
+
+    @Test
+    void createCertificate_withInvalidData_shouldReturnBadRequest() {
+        String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
+
+        String invalidJson = "{}"; // vacío o incorrecto
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(adminToken);
+
+        HttpEntity<String> request = new HttpEntity<>(invalidJson, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones", request, String.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        deleteTestUser("adminTest");
+    }
+
+
 }
