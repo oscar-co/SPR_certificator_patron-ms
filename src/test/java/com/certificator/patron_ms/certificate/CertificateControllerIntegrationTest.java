@@ -1,7 +1,6 @@
 package com.certificator.patron_ms.certificate;
 
 import com.certificator.patron_ms.shared.dto.ApiResponse;
-import com.certificator.patron_ms.user.User;
 import com.certificator.patron_ms.user.UserRepository;
 import com.certificator.patron_ms.utils.TestUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +23,6 @@ public class CertificateControllerIntegrationTest {
     @Autowired private ObjectMapper objectMapper;
     @Autowired private CertificateRepository certificateRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private TestUtils testUtils;
 
     private Long insertedCertId;
@@ -40,7 +36,7 @@ public class CertificateControllerIntegrationTest {
     @BeforeAll
     void setup() throws IOException {
 
-        String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
+        String adminToken = testUtils.registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
         String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
 
         HttpHeaders headers = testUtils.buildHeaders(adminToken);
@@ -65,7 +61,7 @@ public class CertificateControllerIntegrationTest {
     @Test
     void createCertificate_asUser_shouldReturnForbidden() throws Exception {
 
-        String userToken = registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
+        String userToken = testUtils.registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
 
         String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
 
@@ -82,7 +78,7 @@ public class CertificateControllerIntegrationTest {
     @Test
     void getAllCertificates_asUser_shouldReturnList() throws Exception {
 
-        String userToken = registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
+        String userToken = testUtils.registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(userToken);
@@ -98,7 +94,7 @@ public class CertificateControllerIntegrationTest {
     @Test
     void getCertificateById_asUser_shouldReturnCertificate() {
 
-        String userToken = registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
+        String userToken = testUtils.registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(userToken);
@@ -114,7 +110,7 @@ public class CertificateControllerIntegrationTest {
     @Test
     void createAndDeleteCertificate_asAdmin_shouldSucceed() throws Exception {
         // Crear usuario admin
-        String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
+        String adminToken = testUtils.registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
 
         // Crear certificado
         String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
@@ -140,7 +136,7 @@ public class CertificateControllerIntegrationTest {
     @Test
     void deleteCertificate_asUser_shouldBeForbidden() throws Exception {
         // Crear admin y obtener token
-        String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
+        String adminToken = testUtils.registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
 
         String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
         HttpHeaders adminHeaders = testUtils.buildHeaders(adminToken);
@@ -153,7 +149,7 @@ public class CertificateControllerIntegrationTest {
             objectMapper.readValue(createResponse.getBody(), new TypeReference<>() {});
         Long certId = responseObj.getData().getId();
 
-        String userToken = registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
+        String userToken = testUtils.registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
 
         HttpHeaders userHeaders = new HttpHeaders();
         userHeaders.setBearerAuth(userToken);
@@ -172,48 +168,48 @@ public class CertificateControllerIntegrationTest {
     }
 
 
-    private void createTestUser(String username, String password, String email, String role) {
-        if (userRepository.existsByUsername(username)) {
-            userRepository.delete(userRepository.findByUsername(username).get());
-        }
+    // private void createTestUser(String username, String password, String email, String role) {
+    //     if (userRepository.existsByUsername(username)) {
+    //         userRepository.delete(userRepository.findByUsername(username).get());
+    //     }
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setEmail(email);
-        user.setRole(role);
+    //     User user = new User();
+    //     user.setUsername(username);
+    //     user.setPassword(passwordEncoder.encode(password));
+    //     user.setEmail(email);
+    //     user.setRole(role);
 
-        userRepository.save(user);
-    }
+    //     userRepository.save(user);
+    // }
 
     private void deleteTestUser(String username) {
         userRepository.findByUsername(username).ifPresent(userRepository::delete);
     }
 
-    private String registerAndLogin(String username, String password, String email, String role) {
-        createTestUser(username, password, email, role);
-        return getToken(username, password);
-    }
+    // private String registerAndLogin(String username, String password, String email, String role) {
+    //     createTestUser(username, password, email, role);
+    //     return getToken(username, password);
+    // }
 
-    private String getToken(String username, String password) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+    // private String getToken(String username, String password) {
+    //     HttpHeaders headers = new HttpHeaders();
+    //     headers.setContentType(MediaType.APPLICATION_JSON);
 
-        String body = String.format("{\"username\":\"%s\", \"password\":\"%s\"}", username, password);
-        HttpEntity<String> request = new HttpEntity<>(body, headers);
+    //     String body = String.format("{\"username\":\"%s\", \"password\":\"%s\"}", username, password);
+    //     HttpEntity<String> request = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Map> response = restTemplate.postForEntity("/api/auth/login", request, Map.class);
-        if (response.getStatusCode() != HttpStatus.OK || response.getBody() == null || !response.getBody().containsKey("token")) {
-            throw new RuntimeException("No se pudo obtener el token. Login fallido.\nStatus: "
-                + response.getStatusCode() + "\nBody: " + response.getBody());
-        }
+    //     ResponseEntity<Map> response = restTemplate.postForEntity("/api/auth/login", request, Map.class);
+    //     if (response.getStatusCode() != HttpStatus.OK || response.getBody() == null || !response.getBody().containsKey("token")) {
+    //         throw new RuntimeException("No se pudo obtener el token. Login fallido.\nStatus: "
+    //             + response.getStatusCode() + "\nBody: " + response.getBody());
+    //     }
 
-        return (String) response.getBody().get("token");
-    }
+    //     return (String) response.getBody().get("token");
+    // }
 
     @Test
     void updateCertificate_shouldUpdateCorrectly() throws Exception {
-        String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
+        String adminToken = testUtils.registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
 
         // Crear certificado
         String json = TestUtils.readJson("test-data/certificate-with-measurements.json");
@@ -241,7 +237,7 @@ public class CertificateControllerIntegrationTest {
 
     @Test
     void createCertificate_withInvalidData_shouldReturnBadRequest() {
-        String adminToken = registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
+        String adminToken = testUtils.registerAndLogin("adminTest", "admin123", "admin@test.com", "ROLE_ADMIN");
 
         String invalidJson = "{}"; // vacío o incorrecto
         HttpHeaders headers = new HttpHeaders();

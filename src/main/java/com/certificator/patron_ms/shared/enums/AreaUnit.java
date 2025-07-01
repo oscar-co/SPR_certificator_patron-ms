@@ -1,7 +1,7 @@
 package com.certificator.patron_ms.shared.enums;
 
 public enum AreaUnit {
-    M2, KM2, MM2, HE, FT2, MI2, HA;
+    CM2, M2, KM2, MM2, HE, FT2, MI2, HA;
 
     public static AreaUnit fromString(String unit) {
         for (AreaUnit u : values()) {
