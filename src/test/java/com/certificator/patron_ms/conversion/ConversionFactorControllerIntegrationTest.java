@@ -83,15 +83,46 @@ public class ConversionFactorControllerIntegrationTest {
         assertEquals(magnitud, responseObj.getData().getMagnitud());
     }
 
+
+    @Test
+    void testGet_IncorrectMagnitude_ChangeByUnitsAndValue_shouldReturnNotValidResult() throws Exception {
+        HttpHeaders headers = testUtils.buildHeaders(userToken);
+        String jsonRequest = """
+            { "magnitud": "areaxxx", "inputUnit": "cm2", "outputUnit": "m2", "inputValue": 7500 }
+         """;
+        
+        HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones/cambio", entity, String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        ApiResponse<ConversionResponseDTO> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
+        assertEquals("error", responseObj.getStatus());
+        assertEquals("Magnitud no reconocida: areaxxx", responseObj.getMessage());
+    }
+    
+
+    @Test
+    void testGet_IncorrectOutputUnit_ChangeByUnitsAndValue_shouldReturnNotValidResult() throws Exception {
+        HttpHeaders headers = testUtils.buildHeaders(userToken);
+        String jsonRequest = """
+            { "magnitud": "area", "inputUnit": "cm2", "outputUnit": "mj2", "inputValue": 7500 }
+         """;
+        
+        HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones/cambio", entity, String.class);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
+        ApiResponse<ConversionResponseDTO> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
+        assertEquals("error", responseObj.getStatus());
+        assertEquals("Area unit not supported: mj2", responseObj.getMessage());
+    }
+
     @ParameterizedTest
     @MethodSource("provideIncertidumbreData")
     void getUncertaintyByPtn_shouldReturnUncertainty(String inputUnit, Double inputValue, String nameIdentify, Double outputValue) throws Exception {
 
-        //testUtils.insertListOfCertificates();
-
         UncertaintyByPtnDTO dto = new UncertaintyByPtnDTO(inputUnit, inputValue, nameIdentify, outputValue);
         
-
         HttpHeaders headers = testUtils.buildHeaders(userToken);
         HttpEntity<String> request = new HttpEntity<>( objectMapper.writeValueAsString(dto), headers );
 
@@ -102,6 +133,40 @@ public class ConversionFactorControllerIntegrationTest {
         assertEquals("success", responseObj.getStatus());
         assertNotNull(responseObj.getData());
         assertEquals(outputValue, responseObj.getData(), "XXXXX");
+    }
+
+    @Test
+    void getUncertaintyByPtn_outOfRange_shouldReturnUncertainty() throws Exception {
+        
+        HttpHeaders headers = testUtils.buildHeaders(userToken);
+        String request = """
+                { "inputUnit": "C", "inputValue": 160, "nameIdentify": "PTN-002" }
+                """;
+        HttpEntity<String> entity = new HttpEntity<>( request, headers );
+        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/incertidumbre-patron", entity, String.class );
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+        ApiResponse<Double> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
+        assertEquals("error", responseObj.getStatus());
+        assertNull(responseObj.getData());
+        assertEquals("404 NOT_FOUND \"No se encontró incertidumbre para el valor convertido: 160.0\"", responseObj.getMessage());
+    }
+
+    @Test
+    void getUncertaintyByPtn_wrongPtn_shouldReturnUncertainty() throws Exception {
+        
+        HttpHeaders headers = testUtils.buildHeaders(userToken);
+        String request = """
+                { "inputUnit": "C", "inputValue": 34, "nameIdentify": "PTN-007" }
+                """;
+        HttpEntity<String> entity = new HttpEntity<>( request, headers );
+        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/incertidumbre-patron", entity, String.class );
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+
+        ApiResponse<Double> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
+        assertEquals("error", responseObj.getStatus());
+        assertNull(responseObj.getData());
+        assertEquals("404 NOT_FOUND \"No se encontró magnitud para el identificador: PTN-007\"", responseObj.getMessage());
     }
 
 
@@ -123,6 +188,26 @@ public class ConversionFactorControllerIntegrationTest {
         assertFalse(responseObj.getData().isEmpty(), "Debe devolver al menos una unidad para la magnitud");
         assertEquals(responseObj.getData().size(), 6);
         assertTrue(responseObj.getData().contains("ft2"));
+    }
+
+
+    @Test
+    void getUnitsByMagnitud_wrongMagnitud_shouldNotReturnResults() throws Exception {
+
+        String magnitud = "rorororo";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(userToken);
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate
+            .exchange( "/api/patrones/unidades/" + magnitud, HttpMethod.GET, request, String.class );
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ApiResponse<List<String>> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
+        assertEquals("success", responseObj.getStatus());
+        assertNotNull(responseObj.getData());
+        assertTrue(responseObj.getData().isEmpty());
+        assertEquals(responseObj.getData().size(), 0);
     }
 
 
@@ -149,6 +234,31 @@ public class ConversionFactorControllerIntegrationTest {
         assertNotNull(responseObj.getData());
         assertFalse(responseObj.getData().isEmpty(), "Debe devolver al menos un patrón disponible");
         assertEquals(responseObj.getData().size(), 2);
+    }
+
+    @Test
+    void getPatronAvailable_should_Not_ReturnAvailableCerts() throws Exception {
+        //testUtils.insertListOfCertificates();
+
+        HttpHeaders headers = testUtils.buildHeaders(userToken);
+
+        String jsonRequest = """
+            {
+                "magnitud": "temperatura",
+                "inputUnit": "C",
+                "inputValue": 134.3
+            }
+        """;
+
+        HttpEntity<String> request = new HttpEntity<>(jsonRequest, headers);
+        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/patrones-disponibles", request, String.class );
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ApiResponse<List<Certificate>> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
+        assertEquals("success", responseObj.getStatus());
+        assertNotNull(responseObj.getData());
+        assertTrue(responseObj.getData().isEmpty(), "Debe devolver al menos un patrón disponible");
+        assertEquals(responseObj.getData().size(), 0);
     }
 
     // Método fuente para los datos de prueba

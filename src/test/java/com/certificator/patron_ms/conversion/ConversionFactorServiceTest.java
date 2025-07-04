@@ -16,8 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.certificator.patron_ms.certificate.Certificate;
 import com.certificator.patron_ms.certificate.CertificateRepository;
-import com.certificator.patron_ms.conversion.ConversionFactorService;
-import com.certificator.patron_ms.conversion.UnitConversionService;
 import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;

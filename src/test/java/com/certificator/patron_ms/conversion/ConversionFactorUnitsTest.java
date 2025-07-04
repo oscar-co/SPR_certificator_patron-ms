@@ -19,7 +19,7 @@ import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 // Por defecto, JUnit 5 requiere que @AfterAll/@BeforeAll sean static, pero este ajuste cambia el ciclo de vida
 // para que JUnit reutilice la misma instancia de clase en todos los tests.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ConversionFactorUnitsTest {
 
     @Autowired

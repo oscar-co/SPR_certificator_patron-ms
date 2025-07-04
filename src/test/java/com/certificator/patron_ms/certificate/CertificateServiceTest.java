@@ -24,10 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.certificator.patron_ms.certificate.Certificate;
-import com.certificator.patron_ms.certificate.CertificateRepository;
-import com.certificator.patron_ms.certificate.CertificateService;
-import com.certificator.patron_ms.certificate.Measurement;
 import com.certificator.patron_ms.shared.Exception.CertificateNotFoundException;
 import com.certificator.patron_ms.shared.utils.CertificateValidator;
 
@@ -56,7 +52,6 @@ class CertificateServiceTest {
         assertNotNull(result);
         assertEquals(certificate, result);
         
-        // Verificamos que el repositorio fue llamado correctamente
         verify(certificateRepository).save(certificate);
     }
 

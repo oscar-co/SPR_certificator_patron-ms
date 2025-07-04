@@ -17,10 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 // como beans inyectados con @Autowired, dentro de esos métodos.
 // Por defecto, JUnit 5 requiere que @AfterAll/@BeforeAll sean static, pero este ajuste cambia el ciclo de vida
 // para que JUnit reutilice la misma instancia de clase en todos los tests.
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest
 public class CertificateRepositoryTest {
-
 
     @Autowired
     private CertificateRepository certificateRepository;
