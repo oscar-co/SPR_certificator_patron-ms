@@ -37,7 +37,7 @@ public interface CertificateRepository extends JpaRepository<Certificate, Long> 
         FROM measurement m
         JOIN certificate c ON m.cert_id = c.certificate_number
         WHERE c.name_identify = :nameIdentify
-        AND m.reference > :refValue
+        AND m.reference >= :refValue
         ORDER BY m.reference ASC
         LIMIT 1
         """, nativeQuery = true)

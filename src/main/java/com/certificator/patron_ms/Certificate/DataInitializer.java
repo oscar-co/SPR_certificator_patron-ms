@@ -17,15 +17,20 @@ import java.util.List;
 @Profile("!test")
 public class DataInitializer implements CommandLineRunner {
 
-    @Autowired
-    private CertificateService certificateService;
+    @Autowired private CertificateService certificateService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Autowired private ObjectMapper objectMapper;
+
+    @Autowired private CertificateRepository certificateRepository;
+    
+
 
     @Override
     public void run(String... args) throws Exception {
         try {
+
+            certificateRepository.deleteAll();
+
             ClassPathResource resource = new ClassPathResource("data/certificate-with-measurements.json");
             InputStream inputStream = resource.getInputStream();
 

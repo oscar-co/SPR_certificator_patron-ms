@@ -41,10 +41,19 @@ public class ConversionFactorService {
         if (magnitud == null) {
             throw new CertificateNotFoundException("No se encontró magnitud para el identificador: " + request.getNameIdentify());
         }
-        ConversionResultDTO conversionResult = unitConversionService.convertUnits(magnitud, request.getInputUnit(), null, request.getInputValue());
+        ConversionResultDTO conversionResult = unitConversionService.convertUnits(
+            magnitud, 
+            request.getInputUnit(), 
+            null, 
+            request.getInputValue()
+        );
         Optional<Double> uncertainty = certificateRepository.findUncertaintyAboveReferenceByNameIdentify(
-            request.getNameIdentify(), conversionResult.getConvertedValue());        
-        return uncertainty.orElse(null);
+            request.getNameIdentify(), 
+            conversionResult.getConvertedValue()
+        );        
+        return uncertainty.orElseThrow(() ->
+            new CertificateNotFoundException("No se encontró incertidumbre para el valor convertido: " + conversionResult.getConvertedValue())
+        );
     }
 
     public List<String> getUnitsByMagnitu(String magnitud) throws Exception {

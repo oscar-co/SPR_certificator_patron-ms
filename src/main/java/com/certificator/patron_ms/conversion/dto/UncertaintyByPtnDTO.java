@@ -14,10 +14,19 @@ public class UncertaintyByPtnDTO {
     @NotNull(message = "El valor de entrada es obligatorio")
     private Double inputValue;
 
+    private Double outputValue;
+
     public UncertaintyByPtnDTO(String inputUnit, Double inputValue, String nameIdentify) {
         this.inputUnit = inputUnit;
         this.inputValue = inputValue;
         this.nameIdentify = nameIdentify;
+    }
+
+    public UncertaintyByPtnDTO(String inputUnit, Double inputValue, String nameIdentify, Double outputValue) {
+        this.inputUnit = inputUnit;
+        this.inputValue = inputValue;
+        this.nameIdentify = nameIdentify;
+        this.outputValue = outputValue;
     }
 
     public UncertaintyByPtnDTO() {
@@ -31,4 +40,7 @@ public class UncertaintyByPtnDTO {
 
     public Double getInputValue() { return inputValue; }
     public void setInputValue(Double inputValue) { this.inputValue = inputValue; }
+
+    public Double getOutputValue() { return outputValue; }
+    public void setOutputValue(Double outputValue) { this.outputValue = outputValue; }
 }

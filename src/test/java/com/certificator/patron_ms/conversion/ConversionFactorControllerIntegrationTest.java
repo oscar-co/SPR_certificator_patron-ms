@@ -2,6 +2,7 @@ package com.certificator.patron_ms.conversion;
 
 import com.certificator.patron_ms.conversion.dto.ConversionRequestDTO;
 import com.certificator.patron_ms.conversion.dto.ConversionResponseDTO;
+import com.certificator.patron_ms.conversion.dto.UncertaintyByPtnDTO;
 import com.certificator.patron_ms.certificate.Certificate;
 import com.certificator.patron_ms.certificate.CertificateRepository;
 import com.certificator.patron_ms.shared.dto.ApiResponse;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -53,6 +55,11 @@ public class ConversionFactorControllerIntegrationTest {
         certificateRepository.deleteAll();   
     }
 
+    @BeforeAll
+    void isert() throws IOException{
+        testUtils.insertListOfCertificates();
+    }
+
     // Test parametrizado con los datos proporcionados por provideConversionData()
     @ParameterizedTest
     @MethodSource("provideConversionData") //El metodo de carga con diferentes sets de datos esta al final de la clase
@@ -76,14 +83,57 @@ public class ConversionFactorControllerIntegrationTest {
         assertEquals(magnitud, responseObj.getData().getMagnitud());
     }
 
+    @ParameterizedTest
+    @MethodSource("provideIncertidumbreData")
+    void getUncertaintyByPtn_shouldReturnUncertainty(String inputUnit, Double inputValue, String nameIdentify, Double outputValue) throws Exception {
+
+        //testUtils.insertListOfCertificates();
+
+        UncertaintyByPtnDTO dto = new UncertaintyByPtnDTO(inputUnit, inputValue, nameIdentify, outputValue);
+        
+
+        HttpHeaders headers = testUtils.buildHeaders(userToken);
+        HttpEntity<String> request = new HttpEntity<>( objectMapper.writeValueAsString(dto), headers );
+
+        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/incertidumbre-patron", request, String.class );
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ApiResponse<Double> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
+        assertEquals("success", responseObj.getStatus());
+        assertNotNull(responseObj.getData());
+        assertEquals(outputValue, responseObj.getData(), "XXXXX");
+    }
+
+
+    @Test
+    void getUnitsByMagnitud_shouldReturnList() throws Exception {
+
+        String magnitud = "area";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(userToken);
+        HttpEntity<Void> request = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate
+            .exchange( "/api/patrones/unidades/" + magnitud, HttpMethod.GET, request, String.class );
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+        ApiResponse<List<String>> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
+        assertEquals("success", responseObj.getStatus());
+        assertNotNull(responseObj.getData());
+        assertFalse(responseObj.getData().isEmpty(), "Debe devolver al menos una unidad para la magnitud");
+        assertEquals(responseObj.getData().size(), 6);
+        assertTrue(responseObj.getData().contains("ft2"));
+    }
+
+
     @Test
     void getPatronAvailable_shouldReturnAvailableList() throws Exception {
-        testUtils.insertListOfCertificates();
+        //testUtils.insertListOfCertificates();
 
         HttpHeaders headers = testUtils.buildHeaders(userToken);
 
         String jsonRequest = """
-        {
+            {
                 "magnitud": "temperatura",
                 "inputUnit": "C",
                 "inputValue": 34.3
@@ -100,6 +150,7 @@ public class ConversionFactorControllerIntegrationTest {
         assertFalse(responseObj.getData().isEmpty(), "Debe devolver al menos un patrón disponible");
         assertEquals(responseObj.getData().size(), 2);
     }
+
     // Método fuente para los datos de prueba
     static Stream<Arguments> provideConversionData() {
         return Stream.of(
@@ -119,6 +170,15 @@ public class ConversionFactorControllerIntegrationTest {
             // Área
             Arguments.of("area", "m2", "km2", 7500.0, 0.0075),
             Arguments.of("area", "cm2", "m2", 500.0, 0.05)  
+        );
+    }
+
+    // Método fuente para los datos de prueba
+    static Stream<Arguments> provideIncertidumbreData() {
+        return Stream.of(
+
+            Arguments.of("C", 50.0, "PTN-001", 0.15),
+            Arguments.of("C", 80.0, "PTN-002", 0.12)  
         );
     }
 }
