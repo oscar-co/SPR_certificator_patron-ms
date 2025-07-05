@@ -10,6 +10,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
+      SPRING_DATASOURCE_USERNAME: testuser
+      SPRING_DATASOURCE_PASSWORD: testpass
+      SPRING_PROFILES_ACTIVE: test
+
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
@@ -26,6 +47,14 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven
+
+      - name: Esperar a que PostgreSQL esté listo
+        run: |
+          for i in {1..10}; do
+            nc -z localhost 5432 && echo "PostgreSQL listo" && break
+            echo "Esperando PostgreSQL..."
+            sleep 5
+          done
 
       - name: Compilar y testear con Maven
         run: mvn clean verify
