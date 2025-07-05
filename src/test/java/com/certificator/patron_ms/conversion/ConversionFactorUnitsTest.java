@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.certificator.patron_ms.certificate.CertificateRepository;
 import com.certificator.patron_ms.conversion.UnitConversionService;
@@ -19,6 +20,7 @@ import com.certificator.patron_ms.conversion.dto.ConversionResultDTO;
 // Por defecto, JUnit 5 requiere que @AfterAll/@BeforeAll sean static, pero este ajuste cambia el ciclo de vida
 // para que JUnit reutilice la misma instancia de clase en todos los tests.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ConversionFactorUnitsTest {
 
