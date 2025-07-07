@@ -10,7 +10,7 @@
       "unit": "°C",
       "measurements": [
         {
-          "certId": "CERT-001",
+          "certificateNumber": "CERT-001",
           "reference": 100.0,
           "instrumentReading": 100.2,
           "correction": -0.2,
@@ -18,7 +18,7 @@
           "ambientTemp": 22.5
         },
         {
-          "certId": "CERT-001",
+          "certificateNumber": "CERT-001",
           "reference": 50.0,
           "instrumentReading": 49.8,
           "correction": 0.2,
@@ -26,7 +26,7 @@
           "ambientTemp": 22.4
         },
         {
-          "certId": "CERT-001",
+          "certificateNumber": "CERT-001",
           "reference": 0.0,
           "instrumentReading": 0.1,
           "correction": -0.1,

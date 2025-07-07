@@ -14,8 +14,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Certificate {
 
     @Id
@@ -41,95 +49,8 @@ public class Certificate {
     private LocalDate issueDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "certificate_id")
     @OrderBy("instrumentReading ASC")
-    private List<Measurement> measurements = new ArrayList<>();
-
-    
-    public Certificate(Long id, String certificateNumber, String insType, String brand, String model,
-            String nameIdentify, String description, String unit, LocalDate issueDate, List<Measurement> measurements) {
-        this.id = id;
-        this.certificateNumber = certificateNumber;
-        this.insType = insType;
-        this.brand = brand;
-        this.model = model;
-        this.nameIdentify = nameIdentify;
-        this.description = description;
-        this.unit = unit;
-        this.issueDate = issueDate;
-        this.measurements = measurements;
-    }
-
-    public Certificate() {
-    }
-
-    public List<Measurement> getMeasurements() {return measurements;}
-    public void setMeasurements(List<Measurement> measurements) {this.measurements = measurements;}
-
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
-
-    public String getCertificateNumber() {
-        return certificateNumber;
-    }
-
-    public void setCertificateNumber(String certificateNumber) {
-        this.certificateNumber = certificateNumber;
-    }
-
-    public String getInsType() {
-        return insType;
-    }
-
-    public void setInsType(String insType) {
-        this.insType = insType;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getNameIdentify() {
-        return nameIdentify;
-    }
-
-    public void setNameIdentify(String nameIdentify) {
-        this.nameIdentify = nameIdentify;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(LocalDate issueDate) {
-        this.issueDate = issueDate;
-    }  
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
+    @JoinColumn(name = "certificate_id")
+    private List<Measurement> measurements;
+    //private List<Measurement> measurements = new ArrayList<>();
 }

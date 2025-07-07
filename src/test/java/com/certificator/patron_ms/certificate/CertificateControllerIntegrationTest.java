@@ -124,10 +124,10 @@ public class CertificateControllerIntegrationTest {
 
         ApiResponse<Certificate> responseObj =
             objectMapper.readValue(createResponse.getBody(), new TypeReference<>() {});
-        Long certId = responseObj.getData().getId();
+        Long certificate_id = responseObj.getData().getId();
 
         ResponseEntity<Void> deleteResponse = restTemplate.exchange(
-            "/api/patrones/" + certId, HttpMethod.DELETE, new HttpEntity<>(headers), Void.class
+            "/api/patrones/" + certificate_id, HttpMethod.DELETE, new HttpEntity<>(headers), Void.class
         );
         assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
 
@@ -149,7 +149,7 @@ public class CertificateControllerIntegrationTest {
 
         ApiResponse<Certificate> responseObj =
             objectMapper.readValue(createResponse.getBody(), new TypeReference<>() {});
-        Long certId = responseObj.getData().getId();
+        Long certificate_id = responseObj.getData().getId();
 
         String userToken = testUtils.registerAndLogin("userTest", "user123", "user@test.com", "ROLE_USER");
 
@@ -158,7 +158,7 @@ public class CertificateControllerIntegrationTest {
         HttpEntity<Void> userRequest = new HttpEntity<>(userHeaders);
 
         ResponseEntity<Void> deleteResponse = restTemplate.exchange(
-            "/api/patrones/" + certId, HttpMethod.DELETE, userRequest, Void.class
+            "/api/patrones/" + certificate_id, HttpMethod.DELETE, userRequest, Void.class
         );
 
         // Debe estar prohibido
@@ -220,7 +220,7 @@ public class CertificateControllerIntegrationTest {
         headers.setBearerAuth(adminToken);
         HttpEntity<String> request = new HttpEntity<>(json, headers);
         ResponseEntity<String> createResponse = restTemplate.postForEntity("/api/patrones", request, String.class);
-        Long certId = objectMapper.readValue(createResponse.getBody(), new TypeReference<ApiResponse<Certificate>>() {}).getData().getId();
+        Long certificate_id = objectMapper.readValue(createResponse.getBody(), new TypeReference<ApiResponse<Certificate>>() {}).getData().getId();
 
         // Modificar nombre
         Certificate updatedCert = objectMapper.readValue(json, Certificate.class);
@@ -229,7 +229,7 @@ public class CertificateControllerIntegrationTest {
         HttpEntity<String> updateRequest = new HttpEntity<>(updatedJson, headers);
 
         ResponseEntity<String> updateResponse = restTemplate.exchange(
-            "/api/patrones/" + certId, HttpMethod.PUT, updateRequest, String.class);
+            "/api/patrones/" + certificate_id, HttpMethod.PUT, updateRequest, String.class);
 
         assertEquals(HttpStatus.OK, updateResponse.getStatusCode());
         assertTrue(updateResponse.getBody().contains("UPDATED-PTN"));

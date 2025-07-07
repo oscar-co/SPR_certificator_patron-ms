@@ -207,7 +207,7 @@ class CertificateServiceTest {
         original.setId(id);
         Measurement oldMeasurement = new Measurement();
         oldMeasurement.setId(1L);
-        oldMeasurement.setCertId("CERT-123");
+        oldMeasurement.setCertificateNumber("CERT-123");
         oldMeasurement.setReference(BigDecimal.valueOf(10.0));
         oldMeasurement.setInstrumentReading(BigDecimal.valueOf(9.8));
         oldMeasurement.setCorrection(BigDecimal.valueOf(0.2));
@@ -219,7 +219,7 @@ class CertificateServiceTest {
         Certificate incoming = new Certificate();
         Measurement newMeasurement = new Measurement();
         newMeasurement.setId(2L);
-        newMeasurement.setCertId("CERT-123");
+        newMeasurement.setCertificateNumber("CERT-123");
         newMeasurement.setReference(BigDecimal.valueOf(20.0));
         newMeasurement.setInstrumentReading(BigDecimal.valueOf(19.9));
         newMeasurement.setCorrection(BigDecimal.valueOf(0.1));

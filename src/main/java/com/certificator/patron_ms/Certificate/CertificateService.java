@@ -23,6 +23,12 @@ public class CertificateService {
 
     public Certificate createNewPtn(Certificate certificate) {
         logger.info("Creando nuevo certificado: {}", certificate);
+        
+        if (certificate.getMeasurements() != null) {
+        for (Measurement m : certificate.getMeasurements()) {
+            m.setCertificate(certificate);
+        }
+    }
         return certificateRepository.save(certificate);
     }
 
