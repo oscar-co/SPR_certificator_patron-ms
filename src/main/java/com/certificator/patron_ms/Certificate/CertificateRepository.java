@@ -35,7 +35,7 @@ public interface CertificateRepository extends JpaRepository<Certificate, Long> 
     @Query(value = """
         SELECT m.uncertainty
         FROM measurement m
-        JOIN certificate c ON m.cert_id = c.certificate_number
+        JOIN certificate c ON m.certificate_id = c.id
         WHERE c.name_identify = :nameIdentify
         AND m.reference >= :refValue
         ORDER BY m.reference ASC

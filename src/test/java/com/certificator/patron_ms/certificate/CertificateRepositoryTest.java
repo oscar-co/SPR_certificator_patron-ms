@@ -14,12 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.certificator.patron_ms.user.UserRepository;
 import com.certificator.patron_ms.utils.TestUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 // Usamos @TestInstance(TestInstance.Lifecycle.PER_CLASS) para permitir que los métodos @AfterAll y @BeforeAll
