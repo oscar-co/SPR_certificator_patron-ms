@@ -1,7 +1,5 @@
 package com.certificator.patron_ms.user;
 
-import com.certificator.patron_ms.user.User;
-import com.certificator.patron_ms.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
