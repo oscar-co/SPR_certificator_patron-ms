@@ -1,7 +1,16 @@
 #!/bin/bash
 
 echo "Levantando base de datos para desarrollo..."
-docker compose -f docker-compose.dev.yml up -d
+
+# Intentar levantar PostgreSQL
+if ! docker compose -f docker-compose.dev.yml up -d; then
+  echo "Error al levantar los contenedores. Limpiando redes huérfanas..."
+  docker compose -f docker-compose.dev.yml down --volumes --remove-orphans
+  docker network prune -f
+
+  echo "Reintentando levantar contenedores..."
+  docker compose -f docker-compose.dev.yml up -d --build
+fi
 
 echo "Esperando a que PostgreSQL esté en estado 'healthy'..."
 

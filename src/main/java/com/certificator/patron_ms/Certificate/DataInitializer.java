@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.util.List;
 
 @Component
-@Profile("!test")
+@Profile("!test & !prod")
 public class DataInitializer implements CommandLineRunner {
 
     @Autowired private CertificateService certificateService;
@@ -26,6 +26,7 @@ public class DataInitializer implements CommandLineRunner {
 
 
     @Override
+    
     public void run(String... args) throws Exception {
         try {
 
