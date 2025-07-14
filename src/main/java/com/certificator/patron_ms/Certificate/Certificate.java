@@ -44,8 +44,7 @@ public class Certificate {
     @NotNull(message = "La fecha de emisión es obligatoria")
     private LocalDate issueDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "certificate_id")
+    @OneToMany(mappedBy = "certificate", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("instrumentReading ASC")
     @JsonManagedReference
     private List<Measurement> measurements = new ArrayList<>();
