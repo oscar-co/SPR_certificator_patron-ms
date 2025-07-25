@@ -1,0 +1,206 @@
+{
+  "configuration" : { },
+  "description" : "Certificator Workspace",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2025-07-25T14:00:20Z",
+  "model" : {
+    "people" : [ {
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "User",
+      "properties" : {
+        "structurizr.dsl.identifier" : "u"
+      },
+      "relationships" : [ {
+        "description" : "Uses",
+        "destinationId" : "3",
+        "id" : "6",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Uses",
+        "destinationId" : "2",
+        "id" : "7",
+        "linkedRelationshipId" : "6",
+        "sourceId" : "1"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "description" : "Web UI for users",
+        "documentation" : { },
+        "group" : "Client Tier",
+        "id" : "3",
+        "name" : "Frontend Certificator",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.wf"
+        },
+        "relationships" : [ {
+          "description" : "Sends API requests with JWT for auth",
+          "destinationId" : "4",
+          "id" : "8",
+          "sourceId" : "3",
+          "tags" : "Relationship",
+          "technology" : "HTTPS + JSON + JWT"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Angular"
+      }, {
+        "description" : "REST API and business logic",
+        "documentation" : { },
+        "group" : "Server Tier",
+        "id" : "4",
+        "name" : "Backend Certificator",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.wb"
+        },
+        "relationships" : [ {
+          "description" : "Reads from and writes to",
+          "destinationId" : "5",
+          "id" : "9",
+          "sourceId" : "4",
+          "tags" : "Relationship",
+          "technology" : "JPA over JDBC"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Spring Boot"
+      }, {
+        "description" : "Stores certifications and users",
+        "documentation" : { },
+        "group" : "Server Tier",
+        "id" : "5",
+        "name" : "Database PostgreSQL",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ss.db"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "PostgreSQL"
+      } ],
+      "documentation" : { },
+      "id" : "2",
+      "location" : "Unspecified",
+      "name" : "Certificator",
+      "properties" : {
+        "structurizr.dsl.identifier" : "ss"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "1",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlIDEgIkNlcnRpZmljYXRvciBXb3Jrc3BhY2UiIHsKCiAgICAhaWRlbnRpZmllcnMgaGllcmFyY2hpY2FsCgogICAgbW9kZWwgewogICAgICAgIHUgPSBwZXJzb24gIlVzZXIiCgogICAgICAgIHNzID0gc29mdHdhcmVTeXN0ZW0gIkNlcnRpZmljYXRvciIgewogICAgCiAgICAgICAgICAgIGdyb3VwICJDbGllbnQgVGllciIgewogICAgICAgICAgICAgICAgd2YgPSBjb250YWluZXIgIkZyb250ZW5kIENlcnRpZmljYXRvciIgIldlYiBVSSBmb3IgdXNlcnMiICJBbmd1bGFyIgogICAgICAgICAgICB9CgogICAgICAgICAgICBncm91cCAiU2VydmVyIFRpZXIiIHsKICAgICAgICAgICAgICAgIHdiID0gY29udGFpbmVyICJCYWNrZW5kIENlcnRpZmljYXRvciIgIlJFU1QgQVBJIGFuZCBidXNpbmVzcyBsb2dpYyIgIlNwcmluZyBCb290IgogICAgICAgICAgICAgICAgZGIgPSBjb250YWluZXIgIkRhdGFiYXNlIFBvc3RncmVTUUwiICJTdG9yZXMgY2VydGlmaWNhdGlvbnMgYW5kIHVzZXJzIiAiUG9zdGdyZVNRTCIgewogICAgICAgICAgICAgICAgICAgIHRhZ3MgIkRhdGFiYXNlIgogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgfQoKICAgICAgICB1IC0+IHNzLndmICJVc2VzIgoKICAgICAgICBzcy53ZiAtPiBzcy53YiAiU2VuZHMgQVBJIHJlcXVlc3RzIHdpdGggSldUIGZvciBhdXRoIiAiSFRUUFMgKyBKU09OICsgSldUIgogICAgICAgIHNzLndiIC0+IHNzLmRiICJSZWFkcyBmcm9tIGFuZCB3cml0ZXMgdG8iICJKUEEgb3ZlciBKREJDIgogICAgfQoKICAgIHZpZXdzIHsKICAgICAgICBzeXN0ZW1Db250ZXh0IHNzICJEaWFncmFtMSIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIHNzICJEaWFncmFtMiIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgc3R5bGVzIHsKICAgICAgICAgICAgZWxlbWVudCAiRWxlbWVudCIgewogICAgICAgICAgICAgICAgY29sb3IgIzA3NzNhZgogICAgICAgICAgICAgICAgc3Ryb2tlICMwNzczYWYKICAgICAgICAgICAgICAgIHN0cm9rZVdpZHRoIDcKICAgICAgICAgICAgICAgIHNoYXBlIHJvdW5kZWRib3gKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJQZXJzb24iIHsKICAgICAgICAgICAgICAgIHNoYXBlIHBlcnNvbgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkZyb250ZW5kIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICNlM2YyZmQKICAgICAgICAgICAgICAgIHNoYXBlIHJvdW5kZWRib3gKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJCYWNrZW5kIiB7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kICNlOGY1ZTkKICAgICAgICAgICAgICAgIHNoYXBlIHJvdW5kZWRib3gKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJEYXRhYmFzZSIgewogICAgICAgICAgICAgICAgc2hhcGUgY3lsaW5kZXIKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgI2ZiZTllNwogICAgICAgICAgICB9CiAgICAgICAgICAgIHJlbGF0aW9uc2hpcCAiUmVsYXRpb25zaGlwIiB7CiAgICAgICAgICAgICAgICB0aGlja25lc3MgNAogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQp9"
+  },
+  "views" : {
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "Diagram2",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : {
+        "elements" : [ {
+          "color" : "#0773af",
+          "shape" : "RoundedBox",
+          "stroke" : "#0773af",
+          "strokeWidth" : 7,
+          "tag" : "Element"
+        }, {
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "background" : "#e3f2fd",
+          "shape" : "RoundedBox",
+          "tag" : "Frontend"
+        }, {
+          "background" : "#e8f5e9",
+          "shape" : "RoundedBox",
+          "tag" : "Backend"
+        }, {
+          "background" : "#fbe9e7",
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        } ],
+        "relationships" : [ {
+          "tag" : "Relationship",
+          "thickness" : 4
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "dimensions" : {
+        "height" : 915,
+        "width" : 3090
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 200,
+        "y" : 165
+      }, {
+        "id" : "3",
+        "x" : 900,
+        "y" : 215
+      }, {
+        "id" : "4",
+        "x" : 1650,
+        "y" : 215
+      }, {
+        "id" : "5",
+        "x" : 2400,
+        "y" : 215
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "Diagram2",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "6"
+      }, {
+        "id" : "8"
+      }, {
+        "id" : "9"
+      } ],
+      "softwareSystemId" : "2"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : true,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "dimensions" : {
+        "height" : 800,
+        "width" : 1550
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 200,
+        "y" : 165
+      }, {
+        "id" : "2",
+        "x" : 900,
+        "y" : 215
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "Diagram1",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "7"
+      } ],
+      "softwareSystemId" : "2"
+    } ]
+  }
+}
