@@ -1,19 +1,36 @@
 # SPR_certificator_patron-ms – API REST de Certificación Técnica
 
-![Arquitectura del sistema](docs/architecture/views.png)
+<br>
+<hr>
+<br>
 
+### Diagrama de contexto
+<br>
+<p align="center">
+  <img src="docs/architecture/Diagram1.png" alt="Arquitectura del sistema" width="400"/>
+</p>
+
+
+### Diagrama de contenedores
+<br>
+<p align="center">
+  <img src="docs/architecture/Diagram2.png" alt="Arquitectura del sistema Containers" width="900"/>
+</p>
 
 
 ## Arquitectura general del sistema
 
+
 [Ver DSL completo](docs/architecture/context.dsl)
-Este diagrama fue generado con Structurizr DSL. Puedes ver el código fuente aquí.
+
+Este diagrama fue generado con Structurizr DSL.
 
 
 
 Este proyecto es una API RESTful construida con **Spring Boot**, diseñada para gestionar patrones de medida, certificados técnicos e incertidumbres asociadas a procesos de calibración. Forma parte de un sistema mayor de certificación y medición técnica.
 
 Desarrollado como parte de mi formación práctica en Spring Boot, este proyecto refleja mi compromiso con las buenas prácticas backend, el diseño de APIs limpias y una arquitectura sólida orientada a producción.
+
 
 ## Tecnologías utilizadas
 
