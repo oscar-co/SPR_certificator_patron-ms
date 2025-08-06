@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/api/patrones")
+@RequestMapping("/certificator/api/patrones")
 public class ConversionFactorController {
 
     @Autowired

@@ -45,7 +45,7 @@ public class CertificateControllerIntegrationTest {
         HttpEntity<String> request = new HttpEntity<>(json, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
-            "/api/patrones", HttpMethod.POST, request, String.class
+            "/certificator/api/patrones", HttpMethod.POST, request, String.class
         );
 
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Error al insertar el certificado en setup(): " + response.getBody());
@@ -70,7 +70,7 @@ public class CertificateControllerIntegrationTest {
         HttpHeaders headers = testUtils.buildHeaders(userToken);
         HttpEntity<String> request = new HttpEntity<>(json, headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones", request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/certificator/api/patrones", request, String.class);
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
 
         deleteTestUser("userTest");
@@ -86,7 +86,7 @@ public class CertificateControllerIntegrationTest {
         headers.setBearerAuth(userToken);
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
-        ResponseEntity<String> response = restTemplate.exchange("/api/patrones", HttpMethod.GET, request, String.class);
+        ResponseEntity<String> response = restTemplate.exchange("/certificator/api/patrones", HttpMethod.GET, request, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         deleteTestUser("userTest");
@@ -102,7 +102,7 @@ public class CertificateControllerIntegrationTest {
         headers.setBearerAuth(userToken);
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
-        ResponseEntity<Certificate> response = restTemplate.exchange("/api/patrones/" + insertedCertId, HttpMethod.GET, request, Certificate.class);
+        ResponseEntity<Certificate> response = restTemplate.exchange("/certificator/api/patrones/" + insertedCertId, HttpMethod.GET, request, Certificate.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
 
@@ -119,7 +119,7 @@ public class CertificateControllerIntegrationTest {
         HttpHeaders headers = testUtils.buildHeaders(adminToken);
         HttpEntity<String> request = new HttpEntity<>(json, headers);
 
-        ResponseEntity<String> createResponse = restTemplate.postForEntity("/api/patrones", request, String.class);
+        ResponseEntity<String> createResponse = restTemplate.postForEntity("/certificator/api/patrones", request, String.class);
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
 
         ApiResponse<Certificate> responseObj =
@@ -127,7 +127,7 @@ public class CertificateControllerIntegrationTest {
         Long certificate_id = responseObj.getData().getId();
 
         ResponseEntity<Void> deleteResponse = restTemplate.exchange(
-            "/api/patrones/" + certificate_id, HttpMethod.DELETE, new HttpEntity<>(headers), Void.class
+            "/certificator/api/patrones/" + certificate_id, HttpMethod.DELETE, new HttpEntity<>(headers), Void.class
         );
         assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
 
@@ -144,7 +144,7 @@ public class CertificateControllerIntegrationTest {
         HttpHeaders adminHeaders = testUtils.buildHeaders(adminToken);
         HttpEntity<String> adminRequest = new HttpEntity<>(json, adminHeaders);
 
-        ResponseEntity<String> createResponse = restTemplate.postForEntity("/api/patrones", adminRequest, String.class);
+        ResponseEntity<String> createResponse = restTemplate.postForEntity("/certificator/api/patrones", adminRequest, String.class);
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
 
         ApiResponse<Certificate> responseObj =
@@ -158,7 +158,7 @@ public class CertificateControllerIntegrationTest {
         HttpEntity<Void> userRequest = new HttpEntity<>(userHeaders);
 
         ResponseEntity<Void> deleteResponse = restTemplate.exchange(
-            "/api/patrones/" + certificate_id, HttpMethod.DELETE, userRequest, Void.class
+            "/certificator/api/patrones/" + certificate_id, HttpMethod.DELETE, userRequest, Void.class
         );
 
         // Debe estar prohibido
@@ -200,7 +200,7 @@ public class CertificateControllerIntegrationTest {
     //     String body = String.format("{\"username\":\"%s\", \"password\":\"%s\"}", username, password);
     //     HttpEntity<String> request = new HttpEntity<>(body, headers);
 
-    //     ResponseEntity<Map> response = restTemplate.postForEntity("/api/auth/login", request, Map.class);
+    //     ResponseEntity<Map> response = restTemplate.postForEntity("/certificator/api/auth/login", request, Map.class);
     //     if (response.getStatusCode() != HttpStatus.OK || response.getBody() == null || !response.getBody().containsKey("token")) {
     //         throw new RuntimeException("No se pudo obtener el token. Login fallido.\nStatus: "
     //             + response.getStatusCode() + "\nBody: " + response.getBody());
@@ -219,7 +219,7 @@ public class CertificateControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(adminToken);
         HttpEntity<String> request = new HttpEntity<>(json, headers);
-        ResponseEntity<String> createResponse = restTemplate.postForEntity("/api/patrones", request, String.class);
+        ResponseEntity<String> createResponse = restTemplate.postForEntity("/certificator/api/patrones", request, String.class);
         Long certificate_id = objectMapper.readValue(createResponse.getBody(), new TypeReference<ApiResponse<Certificate>>() {}).getData().getId();
 
         // Modificar nombre
@@ -229,7 +229,7 @@ public class CertificateControllerIntegrationTest {
         HttpEntity<String> updateRequest = new HttpEntity<>(updatedJson, headers);
 
         ResponseEntity<String> updateResponse = restTemplate.exchange(
-            "/api/patrones/" + certificate_id, HttpMethod.PUT, updateRequest, String.class);
+            "/certificator/api/patrones/" + certificate_id, HttpMethod.PUT, updateRequest, String.class);
 
         assertEquals(HttpStatus.OK, updateResponse.getStatusCode());
         assertTrue(updateResponse.getBody().contains("UPDATED-PTN"));
@@ -247,7 +247,7 @@ public class CertificateControllerIntegrationTest {
         headers.setBearerAuth(adminToken);
 
         HttpEntity<String> request = new HttpEntity<>(invalidJson, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones", request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/certificator/api/patrones", request, String.class);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 

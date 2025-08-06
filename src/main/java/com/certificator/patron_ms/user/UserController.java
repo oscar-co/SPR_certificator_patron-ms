@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.certificator.patron_ms.shared.dto.ApiResponse;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/certificator/api/users")
 public class UserController {
 
   @Autowired

@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: testpass
       POSTGRES_DB: testdb
     ports:
-      - "5433:5432"  # Usa 5433 para no pisar tu PostgreSQL dev
+      - "5433:5432"  # Usa 5433 para no pisar PostgreSQL dev
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U testuser"]
       interval: 10s

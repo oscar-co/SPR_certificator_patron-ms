@@ -17,7 +17,8 @@ target/
 ### VS Code ###
 .vscode/
 
-logs/
 
+logs/
+docs/
 
 .DS_Store

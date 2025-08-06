@@ -58,7 +58,7 @@ public class TestUtils {
             headers.setBearerAuth(adminToken);
 
             HttpEntity<String> request = new HttpEntity<>(mapper.writeValueAsString(cert), headers);
-            ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones", request, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity("/certificator/api/patrones", request, String.class);
 
             assertEquals(HttpStatus.OK, response.getStatusCode(), "Error insertando certificado: " + cert.getNameIdentify());
         }
@@ -68,7 +68,7 @@ public class TestUtils {
         headers.setBearerAuth(adminToken);
         HttpEntity<Void> getRequest = new HttpEntity<>(headers);
 
-        ResponseEntity<String> getResponse = restTemplate.exchange("/api/patrones", HttpMethod.GET, getRequest, String.class);
+        ResponseEntity<String> getResponse = restTemplate.exchange("/certificator/api/patrones", HttpMethod.GET, getRequest, String.class);
         assertEquals(HttpStatus.OK, getResponse.getStatusCode());
 
         ApiResponse<List<Certificate>> responseObj = mapper.readValue(
@@ -97,7 +97,7 @@ public class TestUtils {
         String body = String.format("{\"username\":\"%s\", \"password\":\"%s\"}", username, password);
         HttpEntity<String> request = new HttpEntity<>(body, headers);
 
-        ResponseEntity<Map> response = restTemplate.postForEntity("/api/auth/login", request, Map.class);
+        ResponseEntity<Map> response = restTemplate.postForEntity("/certificator/api/auth/login", request, Map.class);
 
         if (response.getStatusCode() != HttpStatus.OK || !response.getBody().containsKey("token")) {
             throw new RuntimeException("Login fallido");
