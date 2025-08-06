@@ -13,7 +13,7 @@ import com.certificator.patron_ms.shared.dto.ApiResponse;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/certificator/api/auth")
 public class AuthController {
 
     private final AuthenticationManager authManager;
