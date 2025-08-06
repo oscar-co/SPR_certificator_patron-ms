@@ -70,7 +70,7 @@ public class ConversionFactorControllerIntegrationTest {
         HttpHeaders headers = testUtils.buildHeaders(userToken);
         HttpEntity<String> entity = new HttpEntity<>(objectMapper.writeValueAsString(request), headers);
 
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones/cambio", entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/certificator/api/patrones/cambio", entity, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         ApiResponse<ConversionResponseDTO> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
@@ -92,7 +92,7 @@ public class ConversionFactorControllerIntegrationTest {
          """;
         
         HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones/cambio", entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/certificator/api/patrones/cambio", entity, String.class);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
         ApiResponse<ConversionResponseDTO> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
@@ -109,7 +109,7 @@ public class ConversionFactorControllerIntegrationTest {
          """;
         
         HttpEntity<String> entity = new HttpEntity<>(jsonRequest, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity("/api/patrones/cambio", entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity("/certificator/api/patrones/cambio", entity, String.class);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
         ApiResponse<ConversionResponseDTO> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
@@ -126,7 +126,7 @@ public class ConversionFactorControllerIntegrationTest {
         HttpHeaders headers = testUtils.buildHeaders(userToken);
         HttpEntity<String> request = new HttpEntity<>( objectMapper.writeValueAsString(dto), headers );
 
-        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/incertidumbre-patron", request, String.class );
+        ResponseEntity<String> response = restTemplate.postForEntity( "/certificator/api/patrones/incertidumbre-patron", request, String.class );
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         ApiResponse<Double> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
@@ -143,7 +143,7 @@ public class ConversionFactorControllerIntegrationTest {
                 { "inputUnit": "C", "inputValue": 160, "nameIdentify": "PTN-002" }
                 """;
         HttpEntity<String> entity = new HttpEntity<>( request, headers );
-        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/incertidumbre-patron", entity, String.class );
+        ResponseEntity<String> response = restTemplate.postForEntity( "/certificator/api/patrones/incertidumbre-patron", entity, String.class );
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 
         ApiResponse<Double> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
@@ -160,7 +160,7 @@ public class ConversionFactorControllerIntegrationTest {
                 { "inputUnit": "C", "inputValue": 34, "nameIdentify": "PTN-007" }
                 """;
         HttpEntity<String> entity = new HttpEntity<>( request, headers );
-        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/incertidumbre-patron", entity, String.class );
+        ResponseEntity<String> response = restTemplate.postForEntity( "/certificator/api/patrones/incertidumbre-patron", entity, String.class );
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 
         ApiResponse<Double> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
@@ -179,7 +179,7 @@ public class ConversionFactorControllerIntegrationTest {
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate
-            .exchange( "/api/patrones/unidades/" + magnitud, HttpMethod.GET, request, String.class );
+            .exchange( "/certificator/api/patrones/unidades/" + magnitud, HttpMethod.GET, request, String.class );
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         ApiResponse<List<String>> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
@@ -200,7 +200,7 @@ public class ConversionFactorControllerIntegrationTest {
         HttpEntity<Void> request = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate
-            .exchange( "/api/patrones/unidades/" + magnitud, HttpMethod.GET, request, String.class );
+            .exchange( "/certificator/api/patrones/unidades/" + magnitud, HttpMethod.GET, request, String.class );
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         ApiResponse<List<String>> responseObj = objectMapper.readValue(response.getBody(), new TypeReference<>() {});
@@ -226,7 +226,7 @@ public class ConversionFactorControllerIntegrationTest {
         """;
 
         HttpEntity<String> request = new HttpEntity<>(jsonRequest, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/patrones-disponibles", request, String.class );
+        ResponseEntity<String> response = restTemplate.postForEntity( "/certificator/api/patrones/patrones-disponibles", request, String.class );
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         ApiResponse<List<Certificate>> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
@@ -251,7 +251,7 @@ public class ConversionFactorControllerIntegrationTest {
         """;
 
         HttpEntity<String> request = new HttpEntity<>(jsonRequest, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity( "/api/patrones/patrones-disponibles", request, String.class );
+        ResponseEntity<String> response = restTemplate.postForEntity( "/certificator/api/patrones/patrones-disponibles", request, String.class );
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         ApiResponse<List<Certificate>> responseObj = objectMapper.readValue( response.getBody(), new TypeReference<>() {} );
