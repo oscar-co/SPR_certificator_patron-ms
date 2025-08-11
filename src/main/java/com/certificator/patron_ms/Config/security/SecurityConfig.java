@@ -36,6 +36,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/certificator/api/auth/**").permitAll()
                 .requestMatchers("/certificator/h2-console/**").permitAll()
+                .requestMatchers("/certificator/api/actuator/health", "/certificator/api/actuator/health/**").permitAll()
                 .requestMatchers("/certificator/api/users/register").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/certificator/**").hasAnyRole("USER", "ADMIN")
