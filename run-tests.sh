@@ -1,8 +1,3 @@
-# - Si se ejecuta ./run-tests.sh                                          -> se ejecutan todos los tests
-# - Si se le pasa nombre de clase por parametro, ejecuta
-#        solo esa clase, ej. ./run-tests.sh CertificateRepositoryTest     -> se ejecuta solo esa clase
-
-
 #!/bin/bash
 
 set -e  # Salir si hay errores
